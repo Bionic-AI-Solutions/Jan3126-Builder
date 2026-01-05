@@ -1,0 +1,134 @@
+---
+description: BMAD Integrations - Cursor Rules
+globs:
+alwaysApply: true
+---
+
+# BMAD Integrations - Standard Operating Procedures
+
+This rule file provides standard integration behaviors for all BMAD agents.
+
+## Integration Configuration
+
+All integration settings are stored in `_bmad/_config/project-config.yaml`.
+Agents should read configuration values from this file when executing workflows.
+
+## OpenProject Integration (Work Management)
+
+**Rule: OpenProject-First**
+- ALL work items (epics, stories, tasks) are managed in OpenProject
+- ALWAYS check OpenProject for current work before coding
+- ALWAYS update work package status when starting/completing work
+
+**Configuration Location:** `project-config.yaml` → `openproject:`
+
+**Key Values:**
+- `openproject.project_id` - The OpenProject project ID
+- `openproject.types.*` - Work package type IDs
+- `openproject.statuses.*` - Status IDs
+- `openproject.priorities.*` - Priority IDs
+
+**Tool Reference:** `_bmad/integrations/openproject/tools.md`
+**Workflow Guide:** `_bmad/integrations/openproject/workflow.md`
+
+## Archon Integration (Knowledge Repository)
+
+**Rule: Research-First**
+- ALWAYS search knowledge base before implementing
+- Use Archon for documentation, NOT task management
+- Keep queries SHORT (2-5 keywords)
+
+**Configuration Location:** `project-config.yaml` → `archon:`
+
+**Key Values:**
+- `archon.project_id` - The Archon project UUID
+- `archon.rag.default_match_count` - Default search results
+- `archon.rag.preferred_sources` - Preferred knowledge sources
+
+**Tool Reference:** `_bmad/integrations/archon/tools.md`
+**Workflow Guide:** `_bmad/integrations/archon/workflow.md`
+
+## Agent Integration Responsibilities
+
+### All Agents
+1. Read `project-config.yaml` during activation
+2. Use configured OpenProject project_id for work management
+3. Use configured Archon project_id for documentation
+4. Follow work-driven development cycle
+
+### PM Agent
+- Create work packages using configured type IDs
+- Store product briefs and PRDs in Archon
+- Link Archon documents to OpenProject work packages
+
+### Dev Agent  
+- Query OpenProject for assigned work
+- Update status using configured status IDs
+- Search Archon before implementation
+- Document implementation decisions in Archon
+
+### Architect Agent
+- Create technical work packages
+- Store architecture docs in Archon
+- Create ADRs in Archon with OpenProject links
+
+### SM Agent
+- Use OpenProject for sprint planning
+- Report status from OpenProject
+- Track blockers in OpenProject
+
+### TEA Agent
+- Create test work packages
+- Document test strategies in Archon
+- Update test status in OpenProject
+
+## Standard Workflow Pattern
+
+```
+1. ACTIVATE    → Load project-config.yaml
+2. CHECK WORK  → mcp_openproject_list_work_packages(project_id=config.openproject.project_id)
+3. START       → mcp_openproject_update_work_package(status_id=config.openproject.statuses.in_progress)
+4. RESEARCH    → mcp_archon_rag_search_knowledge_base(...)
+5. IMPLEMENT   → Execute work
+6. DOCUMENT    → mcp_archon_manage_document(project_id=config.archon.project_id, ...)
+7. COMPLETE    → mcp_openproject_update_work_package(status_id=config.openproject.statuses.closed)
+```
+
+## Quick Start Commands
+
+### Get Current Work
+```python
+mcp_openproject_list_work_packages(
+    project_id={config.openproject.project_id},
+    status="open"
+)
+```
+
+### Search Knowledge
+```python
+mcp_archon_rag_search_knowledge_base(
+    query="2-5 keywords",
+    match_count={config.archon.rag.default_match_count}
+)
+```
+
+### Create Work Package
+```python
+mcp_openproject_create_work_package(
+    project_id={config.openproject.project_id},
+    subject="...",
+    type_id={config.openproject.types.user_story},
+    description="..."
+)
+```
+
+### Store Document
+```python
+mcp_archon_manage_document(
+    action="create",
+    project_id={config.archon.project_id},
+    title="...",
+    document_type="spec",
+    content={"markdown": "..."}
+)
+```
