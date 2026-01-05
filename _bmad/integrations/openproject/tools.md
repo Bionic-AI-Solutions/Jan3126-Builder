@@ -2,6 +2,22 @@
 
 This document provides the complete reference for OpenProject MCP tools used in BMAD workflows.
 
+## OpenProject is the PRIMARY System For:
+
+1. **Work Management**: Projects, Epics, Features, User Stories, Tasks
+2. **Status Tracking**: Workflow management and sprint execution
+3. **Document Storage**: ALL project artifacts as attachments at appropriate work package level
+
+### Document Storage Hierarchy
+
+| Work Package Level | Documents to Store |
+|--------------------|-------------------|
+| **Project** | Product briefs, project overview, high-level specs |
+| **Epic** | Epic specifications, business cases, epic-level architecture |
+| **Feature** | Feature architecture, technical designs, feature specs |
+| **User Story** | Story specifications, detailed acceptance criteria docs |
+| **Task** | Implementation notes, technical details, code documentation |
+
 ## Configuration
 
 All OpenProject settings are stored in `_bmad/_config/project-config.yaml` under the `openproject:` section.
@@ -100,12 +116,29 @@ All OpenProject settings are stored in `_bmad/_config/project-config.yaml` under
 | ----------------------------------------------------------- | --------------- | ----------------------------------------------------------- |
 | `mcp_openproject_assign_work_package(work_package_id, ...)` | Assign/reassign | `work_package_id`, optional `assignee_id`, `responsible_id` |
 
-### Attachments
+### Attachments (Document Storage)
+
+**IMPORTANT:** All project documents should be stored as attachments at the appropriate work package level.
 
 | Tool                                                             | Description       | Parameters        |
 | ---------------------------------------------------------------- | ----------------- | ----------------- |
 | `mcp_openproject_list_work_package_attachments(work_package_id)` | List attachments  | `work_package_id` |
 | `mcp_openproject_delete_attachment(attachment_id)`               | Delete attachment | `attachment_id`   |
+
+**Document Storage Guidelines:**
+
+| Document Type | Store At Level | Example |
+|---------------|----------------|---------|
+| Product Brief | Project | Overall product vision document |
+| PRD | Project or Epic | Requirements for the product/epic |
+| Architecture Doc | Feature | Technical architecture for the feature |
+| Technical Spec | Feature/Story | Detailed technical specifications |
+| Acceptance Criteria | Story | Story-specific acceptance criteria doc |
+| Implementation Notes | Task | Task-specific technical notes |
+| Test Strategy | Story/Feature | Testing approach documentation |
+| API Documentation | Feature | API specs for the feature |
+
+**Note:** To upload attachments, use the OpenProject UI or API directly. The MCP tools support listing and deleting attachments.
 
 ### Custom Fields & Schema
 

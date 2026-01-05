@@ -1,26 +1,36 @@
 # Archon MCP Tools Reference
 
-This document provides the complete reference for Archon MCP tools used as a **knowledge repository** in BMAD workflows.
+This document provides the reference for Archon MCP tools used for **searching external knowledge** in BMAD workflows.
 
-## Important Note
+## CRITICAL: Archon Scope
 
-**Archon is used ONLY as a knowledge repository:**
+✅ **USE Archon For (Search Only):**
+- External library documentation
+- Framework references and guides
+- Code examples from public repositories
+- Industry best practices
+- Research from external sources
 
-- Documents and specifications
-- Research and technical knowledge
-- Code examples and patterns
+❌ **DO NOT USE Archon For:**
+- Storing project documents (use OpenProject attachments)
+- PRDs, architecture docs (use OpenProject attachments)
+- Any project-specific artifacts (use OpenProject attachments)
 
-**Archon is NOT used for task management** - use OpenProject for that.
+**All project documents must be stored as OpenProject attachments at the appropriate work package level.**
 
 ## Configuration
 
-All Archon settings are stored in `_bmad/_config/project-config.yaml` under the `archon:` section.
+Archon settings in `_bmad/_config/project-config.yaml`:
 
-**Setup Steps:**
+```yaml
+archon:
+  enabled: true
+  rag:
+    default_match_count: 5
+    preferred_sources: []  # Source IDs for frequently used docs
+```
 
-1. Create or find your Archon project: `mcp_archon_find_projects()`
-2. Get knowledge sources: `mcp_archon_rag_get_available_sources()`
-3. Update `project-config.yaml` with IDs
+**Setup:** Get knowledge sources with `mcp_archon_rag_get_available_sources()`
 
 ## Tool Categories
 
@@ -31,30 +41,16 @@ All Archon settings are stored in `_bmad/_config/project-config.yaml` under the 
 | `mcp_archon_health_check()` | Check MCP server health |
 | `mcp_archon_session_info()` | Get session information |
 
-### Project Management (Knowledge Organization)
+### Document Management (NOT FOR PROJECT DOCS)
 
-| Tool                                                          | Description                  | Parameters                           |
-| ------------------------------------------------------------- | ---------------------------- | ------------------------------------ |
-| `mcp_archon_find_projects(project_id, query, page, per_page)` | List/search/get projects     | All optional                         |
-| `mcp_archon_manage_project(action, ...)`                      | Create/update/delete project | `action`: "create"/"update"/"delete" |
-
-**Note:** Archon projects are for organizing knowledge, not managing work.
-
-### Document Management
+⚠️ **WARNING:** These tools exist but should NOT be used for project documents. Store project documents as OpenProject attachments instead.
 
 | Tool                                                  | Description                   | Parameters                      |
 | ----------------------------------------------------- | ----------------------------- | ------------------------------- |
 | `mcp_archon_find_documents(project_id, ...)`          | List/search/get documents     | `project_id` required           |
 | `mcp_archon_manage_document(action, project_id, ...)` | Create/update/delete document | `action`, `project_id` required |
 
-**Document Types:**
-
-- `spec` - Technical specifications
-- `design` - Design documents
-- `note` - General notes
-- `prp` - Product requirement proposals
-- `api` - API documentation
-- `guide` - Usage guides
+**Use Case:** Only for managing curated external reference materials, NOT project-specific documents.
 
 ### RAG Knowledge Base
 

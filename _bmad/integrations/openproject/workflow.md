@@ -1,17 +1,27 @@
 # OpenProject Work-Driven Development Workflow
 
-This workflow defines how BMAD agents interact with OpenProject for work management.
+This workflow defines how BMAD agents interact with OpenProject for work management and document storage.
 
 ## Core Principle: OpenProject-First
 
-**CRITICAL RULE:** OpenProject is the PRIMARY work management system.
+**CRITICAL RULE:** OpenProject is the PRIMARY system for BOTH work management AND document storage.
 
+### Work Management
 Before coding ANY functionality:
-
 1. Check OpenProject for current work packages
 2. Update work package status when starting work
 3. Update status when work is complete
 4. NEVER code without an associated work package
+
+### Document Storage
+ALL project artifacts must be stored as OpenProject attachments at the appropriate level:
+- **Project-level**: Product briefs, project overview docs
+- **Epic-level**: Epic specifications, business cases
+- **Feature-level**: Feature architecture, technical designs
+- **Story-level**: Story specifications, acceptance criteria docs
+- **Task-level**: Implementation notes, technical details
+
+**DO NOT store project documents in Archon.** Archon is ONLY for searching external knowledge.
 
 ## Mandatory Work Cycle
 
@@ -162,6 +172,68 @@ For most development workflows, use this simplified flow:
 New (71) → In progress (77) → In testing (79) → Closed (82)
 ```
 
+## Document Storage Workflow
+
+### Principle: Store Documents at Appropriate Level
+
+All project documents are stored as OpenProject attachments. Choose the correct work package level:
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                    DOCUMENT STORAGE HIERARCHY                    │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                  │
+│  PROJECT LEVEL                                                   │
+│  └── Product briefs, project overview, high-level specs         │
+│                                                                  │
+│  EPIC LEVEL                                                      │
+│  └── Epic specifications, business cases, epic architecture     │
+│                                                                  │
+│  FEATURE LEVEL                                                   │
+│  └── Feature architecture, technical designs, API specs         │
+│                                                                  │
+│  STORY LEVEL                                                     │
+│  └── Story specs, detailed acceptance criteria, test cases      │
+│                                                                  │
+│  TASK LEVEL                                                      │
+│  └── Implementation notes, code documentation, technical notes  │
+│                                                                  │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+### Document Types and Storage Location
+
+| Document Type | Storage Level | Rationale |
+|---------------|---------------|-----------|
+| Product Brief | Project | Applies to entire project |
+| PRD | Project or Epic | Requirements scope |
+| Architecture Overview | Project | System-wide architecture |
+| Feature Architecture | Feature | Feature-specific design |
+| Technical Specification | Feature/Story | Implementation details |
+| API Documentation | Feature | API is feature-level |
+| Acceptance Criteria Doc | Story | Story-specific criteria |
+| Test Strategy | Feature | Feature-level testing |
+| Test Cases | Story | Story-specific tests |
+| Implementation Notes | Task | Task-specific details |
+| Code Documentation | Task | Implementation reference |
+
+### Attaching Documents
+
+1. **Via OpenProject UI**: Upload directly to work package
+2. **Via API**: Use OpenProject attachment API
+3. **Link in Description**: Reference document location in work package description
+
+### Document Naming Convention
+
+```
+{WorkPackageID}-{DocumentType}-{Version}.{ext}
+
+Examples:
+- WP-123-architecture-v1.md
+- WP-456-acceptance-criteria-v2.md
+- WP-789-implementation-notes.md
+```
+
 ## Agent Integration Points
 
 ### PM Agent
@@ -169,29 +241,34 @@ New (71) → In progress (77) → In testing (79) → Closed (82)
 - **Creates:** Epics, Features, User Stories (from PRD)
 - **Updates:** Story acceptance criteria, priorities
 - **Queries:** Sprint backlog, story status
+- **Documents:** Stores product briefs at Project level, PRDs at Epic level
 
 ### Dev Agent
 
 - **Queries:** Assigned work packages, task details
 - **Updates:** Task status (In progress → Developed)
 - **Creates:** Sub-tasks for implementation breakdown
+- **Documents:** Stores implementation notes at Task level
 
 ### SM Agent
 
 - **Queries:** Sprint progress, blockers
 - **Updates:** Sprint assignments, priorities
 - **Reports:** Sprint status, velocity
+- **Documents:** Sprint reports at Project level
 
 ### Architect Agent
 
 - **Creates:** Technical tasks from architecture decisions
 - **Links:** Stories to technical specifications
+- **Documents:** Stores architecture docs at Feature level, system architecture at Project level
 
 ### TEA Agent
 
 - **Creates:** Test-related tasks
 - **Updates:** Test status, bug reports
 - **Links:** Test cases to stories
+- **Documents:** Stores test strategies at Feature level, test cases at Story level
 
 ## Sprint Planning Workflow
 

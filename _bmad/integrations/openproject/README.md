@@ -1,16 +1,30 @@
 # OpenProject Integration for BMAD
 
-This module provides the standard integration between BMAD methodology and OpenProject work management.
+This module provides the standard integration between BMAD methodology and OpenProject.
 
 ## Overview
 
-OpenProject serves as the **PRIMARY work management system** for all BMAD projects:
+OpenProject serves as the **PRIMARY system** for all BMAD projects:
 
+### Work Management
 - **Projects**: Top-level organization
 - **Epics**: Business goals and major initiatives
 - **Features**: Functional capabilities
 - **User Stories**: User-centric requirements with acceptance criteria
 - **Tasks**: Implementation work items
+
+### Document Storage (Attachments)
+**ALL project documents** are stored as attachments at the appropriate work package level:
+
+| Level | Documents |
+|-------|-----------|
+| **Project** | Product briefs, project overview, high-level specs |
+| **Epic** | Epic specifications, business cases |
+| **Feature** | Feature architecture, technical designs, API specs |
+| **Story** | Story specifications, acceptance criteria docs |
+| **Task** | Implementation notes, technical details |
+
+**⚠️ Important:** Do NOT store project documents in Archon. Archon is ONLY for searching external knowledge (library docs, research, etc.).
 
 ## Quick Setup
 
@@ -56,24 +70,25 @@ openproject:
 
 Each BMAD agent has specific OpenProject responsibilities:
 
-| Agent | Primary Actions |
-|-------|-----------------|
-| **PM** | Create Epics, Features, User Stories from PRD |
-| **Dev** | Query/update Tasks, log time |
-| **SM** | Sprint planning, status reporting |
-| **Architect** | Create technical tasks |
-| **TEA** | Create test tasks, update bug status |
+| Agent | Work Management | Document Storage |
+|-------|-----------------|------------------|
+| **PM** | Create Epics, Features, User Stories | Product briefs (Project), PRDs (Epic) |
+| **Dev** | Query/update Tasks, log time | Implementation notes (Task) |
+| **SM** | Sprint planning, status reporting | Sprint reports (Project) |
+| **Architect** | Create technical tasks | Architecture docs (Feature), System design (Project) |
+| **TEA** | Create test tasks, update bugs | Test strategy (Feature), Test cases (Story) |
 
 ## Core Workflow
 
 ```
 1. GET WORK    → mcp_openproject_list_work_packages(project_id, "open")
 2. START       → mcp_openproject_update_work_package(id, status_id=77)
-3. RESEARCH    → (Use Archon integration)
+3. RESEARCH    → Search Archon for EXTERNAL knowledge (library docs, patterns)
 4. IMPLEMENT   → Write code
-5. REVIEW      → mcp_openproject_update_work_package(id, status_id=79)
-6. COMPLETE    → mcp_openproject_update_work_package(id, status_id=82)
-7. NEXT        → Return to step 1
+5. DOCUMENT    → Attach implementation docs to Task in OpenProject
+6. REVIEW      → mcp_openproject_update_work_package(id, status_id=79)
+7. COMPLETE    → mcp_openproject_update_work_package(id, status_id=82)
+8. NEXT        → Return to step 1
 ```
 
 ## Troubleshooting

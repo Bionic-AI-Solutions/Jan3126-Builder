@@ -1,105 +1,84 @@
 # Archon Integration for BMAD
 
-This module provides the standard integration between BMAD methodology and Archon knowledge repository.
+This module provides integration with Archon as an **external knowledge repository only**.
 
 ## Overview
 
-Archon serves as the **knowledge repository** for all BMAD projects:
+Archon is used **ONLY** for searching external knowledge:
 
-- **Documents**: Technical specifications, architecture docs, PRDs
-- **Research**: Technical research and findings
-- **Code Examples**: Patterns and implementation examples
-- **Decisions**: Architecture Decision Records (ADRs)
+✅ **USE Archon For:**
+- External library documentation (React, FastAPI, PostgreSQL, etc.)
+- Framework references and guides
+- Code examples from public repositories
+- Industry best practices and standards
+- Research findings from external sources
 
-**Important:** Archon is NOT for task management - use OpenProject for that.
+❌ **DO NOT USE Archon For:**
+- Project documents (use OpenProject attachments)
+- PRDs, architecture docs (use OpenProject attachments)
+- Technical specifications (use OpenProject attachments)
+- Any project-specific artifacts (use OpenProject attachments)
+
+**All project documents must be stored as OpenProject attachments at the appropriate work package level.**
 
 ## Quick Setup
 
-### 1. Create or Find Your Archon Project
+Archon requires minimal setup since it's only used for searching existing knowledge sources.
+
+### 1. Get Available Knowledge Sources
 
 ```python
-# Check if project exists
-projects = mcp_archon_find_projects(query="My Project")
-
-# Or create new
-project = mcp_archon_manage_project(
-    action="create",
-    title="My Project - Knowledge Base",
-    description="Technical documentation and research"
-)
-print(project["project"]["id"])  # Save this UUID
-```
-
-### 2. Get Available Knowledge Sources
-
-```python
-# List sources for RAG search
+# List available external documentation sources
 sources = mcp_archon_rag_get_available_sources()
-# Note the source IDs you want to use frequently
+# Note the source IDs for documentation you frequently reference
 ```
 
-### 3. Update Configuration
+### 2. Update Configuration (Optional)
 
 Edit `_bmad/_config/project-config.yaml`:
 
 ```yaml
 archon:
   enabled: true
-  project_id: "your-project-uuid"  # ← From step 1
   
   rag:
     default_match_count: 5
-    preferred_sources:               # ← From step 2
-      - "src_abc123"
-      - "src_def456"
+    preferred_sources:               # ← Sources you use frequently
+      - "src_abc123"                 # e.g., React docs
+      - "src_def456"                 # e.g., FastAPI docs
 ```
 
 ## Files in This Module
 
 | File | Purpose |
 |------|---------|
-| `tools.md` | Complete MCP tool reference |
-| `workflow.md` | Research-driven development workflow |
+| `tools.md` | Complete MCP tool reference for knowledge search |
+| `workflow.md` | Research-first development workflow |
 | `README.md` | This setup guide |
 
-## Core Workflow
+## Core Workflow: Research External Knowledge
 
 ```
-1. IDENTIFY    → What knowledge do I need?
+1. IDENTIFY    → What EXTERNAL knowledge do I need?
 2. SEARCH      → mcp_archon_rag_search_knowledge_base(query, ...)
 3. EXAMPLES    → mcp_archon_rag_search_code_examples(query, ...)
 4. READ        → mcp_archon_rag_read_full_page(page_id)
-5. IMPLEMENT   → Use research in implementation
-6. DOCUMENT    → mcp_archon_manage_document(...) for new docs
+5. IMPLEMENT   → Use external knowledge in implementation
+6. DOCUMENT    → Store project docs in OpenProject (NOT Archon)
 ```
 
-## Integration with OpenProject
-
-Archon and OpenProject work together:
+## System Responsibilities
 
 | System | Responsibility |
 |--------|----------------|
-| **OpenProject** | Work items (epics, stories, tasks), status, sprints |
-| **Archon** | Knowledge (docs, research, examples, decisions) |
-
-**Link them:** Include OpenProject IDs in Archon documents:
-
-```python
-mcp_archon_manage_document(
-    action="create",
-    project_id=archon_id,
-    title="Epic 1: Technical Spec",
-    content={
-        "markdown": f"{spec_content}\n\n---\n**OpenProject Epic:** {epic_id}"
-    },
-    tags=["epic-1", "spec"]
-)
-```
+| **OpenProject** | Work management + ALL project documents (attachments) |
+| **Archon** | Search EXTERNAL knowledge only (no project storage) |
 
 ## Common Tasks
 
-### Search Documentation
+### Search External Documentation
 ```python
+# Search for library/framework documentation
 results = mcp_archon_rag_search_knowledge_base(
     query="authentication JWT",  # Keep queries SHORT (2-5 words)
     match_count=5
@@ -108,22 +87,39 @@ results = mcp_archon_rag_search_knowledge_base(
 
 ### Find Code Examples
 ```python
+# Find implementation patterns from external sources
 examples = mcp_archon_rag_search_code_examples(
     query="FastAPI middleware",
     match_count=3
 )
 ```
 
-### Store New Document
+### Search Specific Documentation Source
 ```python
+# Get available sources
+sources = mcp_archon_rag_get_available_sources()
+
+# Search within specific documentation
+results = mcp_archon_rag_search_knowledge_base(
+    query="hooks state",
+    source_id="src_react_docs",  # Filter to React docs only
+    match_count=5
+)
+```
+
+## What NOT To Do
+
+```python
+# ❌ WRONG - Don't store project documents in Archon
 mcp_archon_manage_document(
     action="create",
-    project_id=archon_project_id,
-    title="Architecture Overview",
-    document_type="spec",
-    content={"markdown": "# Architecture\n\n..."},
-    tags=["architecture"]
+    project_id=archon_id,
+    title="My Project Architecture",  # DON'T DO THIS
+    content={"markdown": "..."}
 )
+
+# ✅ CORRECT - Store project documents as OpenProject attachments
+# Upload architecture doc to Feature work package in OpenProject
 ```
 
 ## Troubleshooting
@@ -132,7 +128,7 @@ mcp_archon_manage_document(
 
 - **Shorten your query** to 2-5 keywords
 - Try different keyword combinations
-- Use source filtering if you know where info should be
+- Use source filtering if you know which documentation to search
 
 ### Source ID Not Working
 
@@ -140,14 +136,8 @@ mcp_archon_manage_document(
 - NOT URLs or domain names
 - Run `mcp_archon_rag_get_available_sources()` to get current IDs
 
-### Document Not Found
-
-- Use `mcp_archon_find_documents(project_id=...)` to list documents
-- Verify you're using the correct `project_id` (UUID format)
-
 ## Related Documentation
 
-- See `workflow.md` for detailed workflow patterns
+- See `workflow.md` for research workflow patterns
 - See `tools.md` for complete tool reference
-- See `_bmad/integrations/openproject/` for work management
-
+- See `_bmad/integrations/openproject/` for work management AND document storage

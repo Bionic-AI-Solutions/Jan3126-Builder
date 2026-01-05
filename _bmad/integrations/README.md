@@ -1,6 +1,15 @@
 # BMAD Integrations Package
 
-This package provides standard integrations for OpenProject work management and Archon knowledge repository.
+This package provides standard integrations for OpenProject (work management + document storage) and Archon (external knowledge search).
+
+## CRITICAL: System Responsibilities
+
+| System | Responsibility |
+|--------|----------------|
+| **OpenProject** | Work management + ALL project documents (attachments) |
+| **Archon** | Search EXTERNAL knowledge only (library docs, patterns) |
+
+**⚠️ DO NOT store project documents in Archon. Archon is ONLY for searching external documentation.**
 
 ## Quick Start
 
@@ -41,11 +50,11 @@ _bmad/
 │   ├── openproject/
 │   │   ├── README.md            # OpenProject setup guide
 │   │   ├── tools.md             # Complete tool reference
-│   │   └── workflow.md          # Work-driven development workflow
+│   │   └── workflow.md          # Work + document storage workflow
 │   ├── archon/
 │   │   ├── README.md            # Archon setup guide
-│   │   ├── tools.md             # Complete tool reference
-│   │   └── workflow.md          # Research-driven workflow
+│   │   ├── tools.md             # External search reference
+│   │   └── workflow.md          # External knowledge search workflow
 │   ├── workflows/
 │   │   └── project-init/
 │   │       └── workflow.md      # Project initialization workflow
@@ -60,6 +69,18 @@ scripts/
 └── bmad-setup.py                # Setup and management script
 ```
 
+## Document Storage Architecture
+
+**ALL project documents are stored as OpenProject attachments at the appropriate level:**
+
+| Work Package Level | Documents to Store |
+|--------------------|-------------------|
+| **Project** | Product briefs, project overview, high-level specs |
+| **Epic** | Epic specifications, business cases |
+| **Feature** | Feature architecture, technical designs, API specs |
+| **Story** | Story specifications, acceptance criteria docs, test cases |
+| **Task** | Implementation notes, technical details |
+
 ## Configuration
 
 All project-specific settings are in `_bmad/_config/project-config.yaml`:
@@ -70,7 +91,7 @@ All project-specific settings are in `_bmad/_config/project-config.yaml`:
 | `team` | Team settings (user name, language) |
 | `paths` | Output directories |
 | `openproject` | OpenProject IDs and workflow settings |
-| `archon` | Archon project ID and RAG settings |
+| `archon` | RAG search settings (external knowledge only) |
 | `testing` | TEA agent configuration |
 | `workflows` | Story sizing, sprint settings |
 
@@ -81,7 +102,9 @@ openproject:
   project_id: YOUR_PROJECT_ID  # From OpenProject
 
 archon:
-  project_id: "YOUR-UUID"      # From Archon
+  enabled: true
+  rag:
+    default_match_count: 5
 ```
 
 ## How It Works
@@ -132,12 +155,14 @@ BMAD agents reference the integration modules:
               ▼                               ▼
      ┌─────────────────────┐     ┌─────────────────────┐
      │     OPENPROJECT     │     │       ARCHON        │
-     │  (Work Management)  │     │ (Knowledge Repo)    │
+     │ (Work + Documents)  │     │ (External Search)   │
      │                     │     │                     │
-     │  • Epics            │     │  • Documents        │
-     │  • Stories          │     │  • Research         │
-     │  • Tasks            │     │  • Code Examples    │
-     │  • Status           │     │  • Specifications   │
+     │  • Epics            │     │  • Library docs     │
+     │  • Stories          │     │  • Framework refs   │
+     │  • Tasks            │     │  • Code examples    │
+     │  • Status           │     │  • Best practices   │
+     │  • ALL Documents    │     │                     │
+     │    (attachments)    │     │  ⚠️ Search only!   │
      └─────────────────────┘     └─────────────────────┘
 ```
 
@@ -161,9 +186,8 @@ python scripts/bmad-setup.py init
 ### Step 3: Configure
 
 1. Get OpenProject project ID
-2. Get/create Archon project
-3. Update `project-config.yaml`
-4. Regenerate CLAUDE.md
+2. Update `project-config.yaml`
+3. Regenerate CLAUDE.md
 
 ### Step 4: Verify
 
@@ -173,21 +197,30 @@ python scripts/bmad-setup.py validate
 
 ## Integration Rules
 
-### OpenProject-First Rule
+### Rule 1: OpenProject-First
 
-**ALWAYS** use OpenProject for work management:
+**ALWAYS** use OpenProject for work management AND document storage:
 - Create work packages before coding
 - Update status when starting/completing work
+- Attach project documents to appropriate work package level
 - Never skip work package updates
 
-### Research-First Rule
+### Rule 2: Documents in OpenProject
 
-**ALWAYS** search Archon before implementing:
-- Search knowledge base for existing patterns
-- Find code examples
-- Read full documentation pages
+**ALWAYS** store project documents as OpenProject attachments:
+- Product briefs → Project-level
+- Architecture docs → Feature-level
+- Implementation notes → Task-level
 
-### Configuration Reference Rule
+### Rule 3: Archon for External Search Only
+
+**ONLY** use Archon for searching external knowledge:
+- Search library documentation
+- Find framework references
+- Look up code patterns from external sources
+- **DO NOT** store project documents in Archon
+
+### Rule 4: Configuration Reference
 
 **ALWAYS** use configured IDs:
 - Don't hardcode type/status/priority IDs
@@ -222,8 +255,7 @@ Update `project-config.yaml` with correct values.
 
 ## Related Documentation
 
-- [OpenProject Integration](openproject/README.md)
-- [Archon Integration](archon/README.md)
+- [OpenProject Integration](openproject/README.md) - Work management + document storage
+- [Archon Integration](archon/README.md) - External knowledge search only
 - [Project Initialization Workflow](workflows/project-init/workflow.md)
 - [Agent Integration Mixin](agent-integration-mixin.md)
-

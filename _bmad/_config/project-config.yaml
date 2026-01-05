@@ -40,10 +40,18 @@ paths:
 # -----------------------------------------------------------------------------
 # OPENPROJECT INTEGRATION
 # -----------------------------------------------------------------------------
-# OpenProject is the PRIMARY work management system for all:
-# - Projects, Epics, Features, User Stories, Tasks
+# OpenProject is the PRIMARY system for:
+# - Projects, Epics, Features, User Stories, Tasks (work management)
 # - Status tracking and workflow management
 # - Sprint planning and execution
+# - ALL PROJECT DOCUMENT ARTIFACTS (attachments at work package level)
+#
+# DOCUMENT STORAGE HIERARCHY:
+# - Project-level: Product briefs, project overview docs
+# - Epic-level: Epic specifications, business cases
+# - Feature-level: Feature architecture, technical designs
+# - Story-level: Story specifications, acceptance criteria docs
+# - Task-level: Implementation notes, technical details
 #
 # To find your project_id: Run mcp_openproject_list_projects(active_only=True)
 # To find type_ids: Run mcp_openproject_list_types(project_id=YOUR_ID)
@@ -102,19 +110,23 @@ openproject:
 # -----------------------------------------------------------------------------
 # ARCHON INTEGRATION
 # -----------------------------------------------------------------------------
-# Archon is used as a KNOWLEDGE REPOSITORY for:
-# - Project documents and specifications
-# - Research and knowledge base
-# - Code examples and patterns
+# Archon is ONLY a KNOWLEDGE REPOSITORY for EXTERNAL resources:
+# - External documentation (library docs, framework references)
+# - Research findings and technical knowledge
+# - Code examples and patterns from external sources
+# - Industry best practices and standards
 #
-# NOTE: Archon is NOT used for task management (use OpenProject for that)
+# CRITICAL: Archon is NOT for project artifacts!
+# - NO project documents (store as OpenProject attachments)
+# - NO PRDs/architecture docs (store as OpenProject attachments)
+# - NO task management (use OpenProject work packages)
+# - ONLY search/reference external knowledge
 # -----------------------------------------------------------------------------
 archon:
   enabled: true
   
-  # Archon project ID for this project's knowledge repository
-  # Get from: mcp_archon_find_projects() or create new with mcp_archon_manage_project
-  project_id: null                    # e.g., "00ae4b66-93ed-41dc-9f96-d5f6e2842fc8"
+  # Archon is for searching external knowledge sources only
+  # NOT for storing project-specific documents
   
   # RAG Search Configuration
   rag:
