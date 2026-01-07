@@ -150,11 +150,43 @@ archon:
 2. **Research-First**: Search Archon knowledge base before implementing
 3. **Configuration-Driven**: Single `project-config.yaml` for all settings
 
+### Complete BMAD Methodology
+
+This template includes the **complete BMAD (Build, Manage, and Deploy) Methodology** with:
+
+- **9 Specialized Agents** (PM, Dev, Architect, SM, TEA, Tech Writer, UX Designer, Analyst, Quick-Flow)
+- **30+ Workflows** (create-epics-and-stories, groom-story, dev-story, test-validation, etc.)
+- **Complete Integration Rules** (OpenProject + Archon)
+- **Lifecycle Management** (Epic → Feature → Story → Task workflow)
+
+### Using BMAD Agents in Cursor
+
+Reference agents and workflows using `@bmad` syntax:
+
+```
+@bmad/bmm/agents/pm              # Activate Product Manager agent
+@bmad/bmm/workflows/create-epics-and-stories  # Create epics workflow
+@bmad/bmm/workflows/groom-story  # Story grooming workflow
+@bmad/index                      # See all available agents/workflows
+```
+
+### Architecture
+
+BMAD uses a two-tier architecture:
+
+1. **`.cursor/rules/bmad/`** - Activation layer (lightweight pointers)
+2. **`_bmad/`** - Doctrine layer (complete source of truth)
+
+When you reference `@bmad/bmm/agents/pm`, Cursor loads the activation file which then loads the complete agent definition from `_bmad/bmm/agents/pm.md`.
+
 ### Detailed Documentation
 
-- [BMAD Integrations README](_bmad/integrations/README.md)
-- [OpenProject Integration](_bmad/integrations/openproject/README.md)
-- [Archon Integration](_bmad/integrations/archon/README.md)
+- [BMAD Cursor Integration Explained](docs/BMAD_CURSOR_INTEGRATION_EXPLAINED.md) - How BMAD works with Cursor
+- [BMAD Doctrine Integration Summary](docs/BMAD_DOCTRINE_INTEGRATION_SUMMARY.md) - Integration details
+- [Complete Checklist](docs/VIRGIN_DEVCONTAINER_CHECKLIST.md) - File-by-file checklist
+- [BMAD Integrations README](_bmad/integrations/README.md) - Integration overview
+- [OpenProject Integration](_bmad/integrations/openproject/README.md) - Work management
+- [Archon Integration](_bmad/integrations/archon/README.md) - Knowledge repository
 
 ---
 

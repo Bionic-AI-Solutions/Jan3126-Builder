@@ -53,7 +53,7 @@ paths:
 # - Story-level: Story specifications, acceptance criteria docs
 # - Task-level: Implementation notes, technical details
 #
-# To find your project_id: Run mcp_openproject_list_projects(active_only=True)
+# To find your project_id: nullRun mcp_openproject_list_projects(active_only=True)
 # To find type_ids: Run mcp_openproject_list_types(project_id=YOUR_ID)
 # To find status_ids: Run mcp_openproject_list_statuses()
 # -----------------------------------------------------------------------------
@@ -61,7 +61,7 @@ openproject:
   enabled: true
   
   # Project identifier (REQUIRED - get from OpenProject)
-  project_id: null                    # e.g., 8 - SET THIS FIRST!
+  project_id: nullnull                    # e.g., 8 - SET THIS FIRST!
   
   # Work Package Type IDs (get from mcp_openproject_list_types)
   types:
