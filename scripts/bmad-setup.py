@@ -2,7 +2,7 @@
 """
 BMAD Project Setup Script
 
-This script helps configure BMAD projects with OpenProject and Archon integrations.
+This script helps configure BMAD projects with OpenProject and optional Archon RAG integration.
 
 Usage:
     python scripts/bmad-setup.py init              # Interactive project initialization
@@ -129,10 +129,11 @@ def validate_config():
         if not op.get('types', {}).get('epic'):
             warnings.append("openproject.types.epic not configured (using default)")
     
+    # Archon RAG can be used without a project_id (project_id is only for project management)
     ar = config.get('archon', {})
-    if ar.get('enabled', True):
-        if not ar.get('project_id'):
-            issues.append("archon.project_id is not set")
+    if ar.get('enabled', False):
+        # project_id is optional - RAG works without it
+        pass
     
     # Display results
     print("\n" + "=" * 60)
@@ -190,7 +191,7 @@ def init_project():
         'team': {},
         'paths': {},
         'openproject': {'enabled': True},
-        'archon': {'enabled': True},
+        'archon': {'enabled': False},
         'testing': {},
         'workflows': {},
         'custom': {}
@@ -270,18 +271,28 @@ def init_project():
         'complete_status': 82
     }
     
-    # Archon
-    print("\n--- Archon Configuration ---")
-    print("You'll need the Archon project UUID.")
-    print("Run: mcp_archon_find_projects() or create with mcp_archon_manage_project()")
+    # Archon RAG Configuration
+    print("\n--- Archon RAG Configuration ---")
+    print("Archon RAG provides knowledge base search capabilities.")
+    print("You can use RAG without a project_id (project_id is only for project management).")
     print("")
     
-    ar_id = input("Archon project_id UUID (or 'skip'): ").strip()
-    if ar_id.lower() != 'skip' and ar_id:
-        config['archon']['project_id'] = ar_id
+    enable_archon = input("Enable Archon RAG? (y/N): ").strip().lower()
+    if enable_archon == 'y':
+        config['archon']['enabled'] = True
+        
+        # Optional project_id for project management features
+        print("\nArchon Project ID (optional - only needed for project management, not RAG):")
+        ar_id = input("  Enter project UUID or press Enter to skip: ").strip()
+        if ar_id:
+            config['archon']['project_id'] = ar_id
+        else:
+            config['archon']['project_id'] = None
+            print("  ✅ Archon RAG enabled without project management")
     else:
+        config['archon']['enabled'] = False
         config['archon']['project_id'] = None
-        print("⚠️  Archon not configured. Update project-config.yaml later.")
+        print("  ⚠️  Archon RAG disabled")
     
     config['archon']['rag'] = {
         'default_match_count': 5,
