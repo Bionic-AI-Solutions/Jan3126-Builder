@@ -1,5 +1,7 @@
 # Edit Module Workflow
 
+> **DEPRECATED**: This workflow is deprecated. Use `@bmad/bmb/workflows/create-module` instead.
+
 Interactive workflow for editing existing BMAD modules, including structure, agents, workflows, configuration, and documentation.
 
 ## Purpose

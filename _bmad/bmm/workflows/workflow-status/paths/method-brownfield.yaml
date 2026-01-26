@@ -82,14 +82,14 @@ phases:
         optional: true
         workflow: "{project-root}/_bmad/bmm/workflows/testarch/test-design/workflow.yaml"
         agent: "tea"
-        command: "/bmad:bmm:workflows:test-design"
+        command: "/bmad:bmm:workflows:testarch-test-design"
         output: "System-level testability review"
         note: "Testability assessment before gate check - auto-detects system-level mode"
       - id: "implementation-readiness"
         required: true
         exec: "{project-root}/_bmad/bmm/workflows/3-solutioning/check-implementation-readiness/workflow.md"
         agent: "architect"
-        command: "/bmad:bmm:workflows:implementation-readiness"
+        command: "/bmad:bmm:workflows:check-implementation-readiness"
         note: "Validates PRD + Architecture + Epics + UX (optional)"
   - phase: 4
     name: "Implementation"

@@ -4,7 +4,7 @@ description: "Initialize a new BMM project by determining level, type, and creat
 author: "BMad"
 
 # Critical variables from config
-config_source: "{project-root}/_bmad/bmm/config.yaml"
+config_source: "{project-root}/_bmad/_config/project-config.yaml"
 output_folder: "{config_source}:output_folder"
 implementation_artifacts: "{config_source}:implementation_artifacts"
 planning_artifacts: "{config_source}:planning_artifacts"

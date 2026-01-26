@@ -3,7 +3,7 @@ description: "Create the next user story from epics+stories with enhanced contex
 author: "BMad"
 
 # Critical variables from config
-config_source: "{project-root}/_bmad/bmm/config.yaml"
+config_source: "{project-root}/_bmad/_config/project-config.yaml"
 user_name: "{config_source}:user_name"
 communication_language: "{config_source}:communication_language"
 date: system-generated

@@ -1,0 +1,17 @@
+---
+description: BMAD Integrations - Standard Operating Procedures
+globs:
+alwaysApply: true
+---
+
+# BMAD Integrations
+
+<critical>LOAD and FOLLOW the complete integration rules from @_bmad/integrations/cursor-rules.mdc</critical>
+
+This provides standard integration behaviors for all BMAD agents including:
+- OpenProject for work management AND document storage
+- Archon for EXTERNAL knowledge search ONLY
+- Agent-specific integration responsibilities
+- Standard workflow patterns
+
+The full integration rules are maintained in `_bmad/integrations/cursor-rules.mdc` for IDE portability.

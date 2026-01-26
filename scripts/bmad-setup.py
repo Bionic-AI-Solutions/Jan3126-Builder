@@ -192,15 +192,19 @@ def init_project():
             print("Aborted.")
             return
     
+    # Initialize config structure matching project-config.yaml schema
     config = {
+        # Structured sections
         'project': {},
         'team': {},
         'paths': {},
         'openproject': {'enabled': True},
         'archon': {'enabled': False},
+        'genimage': {'enabled': False},
         'testing': {},
         'workflows': {},
-        'custom': {}
+        'custom': {},
+        # Legacy compatibility aliases will be added after structured sections
     }
     
     # Project info
@@ -218,10 +222,13 @@ def init_project():
     config['team']['document_output_language'] = "English"
     
     # Paths
-    config['paths']['output_folder'] = "{project-root}/_bmad-output"
-    config['paths']['planning_artifacts'] = "{project-root}/_bmad-output/planning-artifacts"
-    config['paths']['implementation_artifacts'] = "{project-root}/_bmad-output/implementation-artifacts"
-    config['paths']['project_knowledge'] = "{project-root}/docs"
+    config['paths'] = {
+        'output_folder': "{project-root}/_bmad-output",
+        'planning_artifacts': "{project-root}/_bmad-output/planning-artifacts",
+        'implementation_artifacts': "{project-root}/_bmad-output/implementation-artifacts",
+        'project_knowledge': "{project-root}/docs",
+        'bmb_creations': "{project-root}/_bmad-output/bmb-creations"
+    }
     
     # OpenProject
     print("\n--- OpenProject Configuration ---")
@@ -320,6 +327,28 @@ def init_project():
         'require_acceptance_criteria': True,
         'require_technical_notes': True
     }
+    
+    # GenImage (disabled by default)
+    config['genimage'] = {
+        'enabled': False,
+        'default_model': 'flux',
+        'output_folder': '{project-root}/_bmad-output/images'
+    }
+    
+    # Add legacy compatibility aliases at root level for backwards compatibility
+    # These allow old workflows to still function during migration
+    config['project_name'] = config['project']['name']
+    config['user_name'] = config['team']['user_name']
+    config['user_skill_level'] = config['team']['user_skill_level']
+    config['communication_language'] = config['team']['communication_language']
+    config['document_output_language'] = config['team']['document_output_language']
+    config['output_folder'] = config['paths']['output_folder']
+    config['planning_artifacts'] = config['paths']['planning_artifacts']
+    config['implementation_artifacts'] = config['paths']['implementation_artifacts']
+    config['project_knowledge'] = config['paths']['project_knowledge']
+    config['bmb_creations_output_folder'] = config['paths']['bmb_creations']
+    config['tea_use_mcp_enhancements'] = config['testing']['tea_use_mcp_enhancements']
+    config['tea_use_playwright_utils'] = config['testing']['tea_use_playwright_utils']
     
     # Save config
     save_config(config)

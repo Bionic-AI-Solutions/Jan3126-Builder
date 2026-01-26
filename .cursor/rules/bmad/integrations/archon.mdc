@@ -1,0 +1,15 @@
+---
+description: BMAD Integration: Archon Workflow
+globs:
+alwaysApply: false
+---
+
+IT IS CRITICAL THAT YOU FOLLOW THESE STEPS:
+
+<steps CRITICAL="TRUE">
+1. Always LOAD the FULL @_bmad/integrations/archon/workflow.md
+2. READ its entire contents - this contains Archon integration workflow
+3. Also reference @_bmad/integrations/archon/tools.md for available MCP tools
+4. Follow the workflow instructions EXACTLY as written
+5. CRITICAL: Archon is for EXTERNAL knowledge search ONLY - do NOT store project documents
+</steps>

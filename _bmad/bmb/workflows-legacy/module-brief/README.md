@@ -1,5 +1,7 @@
 # Module Brief Workflow
 
+> **DEPRECATED**: This workflow is deprecated. Module planning is now integrated into `@bmad/bmb/workflows/create-module`.
+
 ## Overview
 
 The Module Brief workflow creates comprehensive blueprints for building new BMAD modules using strategic analysis and creative vision. It serves as the essential planning phase that transforms initial ideas into detailed, actionable specifications ready for implementation with the create-module workflow.

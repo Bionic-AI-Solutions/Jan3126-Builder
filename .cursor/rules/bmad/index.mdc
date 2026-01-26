@@ -79,7 +79,6 @@ BMAD rules have been installed to: `.cursor/rules/bmad/`
 - @bmad/bmm/workflows/correct-course - correct-course
 - @bmad/bmm/workflows/create-story - create-story
 - @bmad/bmm/workflows/dev-story - dev-story
-- @bmad/bmm/workflows/dev-story-with-tasks - dev-story-with-tasks
 - @bmad/bmm/workflows/groom-story - groom-story
 - @bmad/bmm/workflows/test-validation - test-validation
 - @bmad/bmm/workflows/bug-management - bug-management
@@ -105,6 +104,14 @@ BMAD rules have been installed to: `.cursor/rules/bmad/`
 - @bmad/bmm/workflows/workflow-init - workflow-init
 - @bmad/bmm/workflows/workflow-status - workflow-status
 
+### INTEGRATIONS
+
+**Workflows:**
+- @bmad/integrations/cursor-rules - Integration rules (alwaysApply)
+- @bmad/integrations/project-init - Project initialization
+- @bmad/integrations/openproject - OpenProject work management
+- @bmad/integrations/archon - External knowledge search
+- @bmad/integrations/genimage - Image generation
 
 ## Quick Reference
 

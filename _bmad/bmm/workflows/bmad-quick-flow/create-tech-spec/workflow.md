@@ -1,7 +1,7 @@
 ---
 name: create-tech-spec
 description: Conversational spec engineering - ask questions, investigate code, produce implementation-ready tech-spec.
-main_config: '{project-root}/_bmad/bmm/config.yaml'
+main_config: '{project-root}/_bmad/_config/project-config.yaml'
 web_bundle: true
 
 # Checkpoint handler paths

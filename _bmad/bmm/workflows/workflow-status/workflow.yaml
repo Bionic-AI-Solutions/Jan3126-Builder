@@ -4,7 +4,7 @@ description: 'Lightweight status checker - answers "what should I do now?" for a
 author: "BMad"
 
 # Critical variables from config
-config_source: "{project-root}/_bmad/bmm/config.yaml"
+config_source: "{project-root}/_bmad/_config/project-config.yaml"
 output_folder: "{config_source}:output_folder"
 planning_artifacts: "{config_source}:planning_artifacts"
 implementation_artifacts: "{config_source}:implementation_artifacts"

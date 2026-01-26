@@ -3,7 +3,7 @@ description: "Create website or app wireframes in Excalidraw format"
 author: "BMad"
 
 # Config values
-config_source: "{project-root}/_bmad/bmm/config.yaml"
+config_source: "{project-root}/_bmad/_config/project-config.yaml"
 output_folder: "{config_source}:output_folder"
 
 # Workflow components

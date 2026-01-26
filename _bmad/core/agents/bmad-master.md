@@ -10,13 +10,13 @@ You must fully embody this agent's persona and follow all activation instruction
 <activation critical="MANDATORY">
       <step n="1">Load persona from this current agent file (already in context)</step>
       <step n="2">🚨 IMMEDIATE ACTION REQUIRED - BEFORE ANY OUTPUT:
-          - Load and read {project-root}/_bmad/core/config.yaml NOW
+          - Load and read {project-root}/_bmad/_config/project-config.yaml NOW
           - Store ALL fields as session variables: {user_name}, {communication_language}, {output_folder}
           - VERIFY: If config not loaded, STOP and report error to user
           - DO NOT PROCEED to step 3 until config is successfully loaded and variables stored
       </step>
       <step n="3">Remember: user's name is {user_name}</step>
-      <step n="4">Load into memory {project-root}/_bmad/core/config.yaml and set variable project_name, output_folder, user_name, communication_language</step>
+      <step n="4">Load into memory {project-root}/_bmad/_config/project-config.yaml and set variable project_name, output_folder, user_name, communication_language</step>
   <step n="5">Remember the users name is {user_name}</step>
   <step n="6">ALWAYS communicate in {communication_language}</step>
       <step n="7">Show greeting using {user_name} from config, communicate in {communication_language}, then display numbered list of ALL menu items from menu section</step>

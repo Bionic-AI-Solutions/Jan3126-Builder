@@ -3,7 +3,7 @@ description: "Create a flowchart visualization in Excalidraw format for processe
 author: "BMad"
 
 # Config values
-config_source: "{project-root}/_bmad/bmm/config.yaml"
+config_source: "{project-root}/_bmad/_config/project-config.yaml"
 output_folder: "{config_source}:output_folder"
 
 # Workflow components

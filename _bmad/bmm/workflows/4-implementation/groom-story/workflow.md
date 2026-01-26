@@ -1,7 +1,7 @@
 # BMAD BMM Workflow: groom-story
 
 **Workflow Type:** Story Grooming  
-**Agent:** PM (Product Manager)  
+**Agent:** PM (Product Manager), with Dev Team and Test Team  
 **Phase:** Pre-Implementation  
 **Status:** MANDATORY WORKFLOW
 
@@ -10,6 +10,45 @@
 Groom a story by breaking it down into implementable tasks and creating them in OpenProject BEFORE implementation begins. This is a mandatory agile practice that must be completed before the story moves to "In progress".
 
 **CRITICAL:** If the Story is in "In specification" status, ensure all required specification artifacts are attached before requesting transition to "Specified" status. Scrum Master (SM) will verify artifacts before allowing the transition.
+
+---
+
+## RACI Matrix
+
+| Activity | PM | SM | Dev | TEA | Architect |
+|----------|----|----|-----|-----|-----------|
+| Story Review | R | I | C | C | C |
+| Development Task Creation | C | A | R | I | C |
+| Test Task Creation | I | A | I | R | I |
+| Task Verification | I | R/A | C | C | I |
+| Artifact Attachment | R | A | I | I | I |
+| Status Transition Approval | I | R/A | I | I | I |
+
+**Legend:** R = Responsible, A = Accountable, C = Consulted, I = Informed
+
+### Key RACI Notes
+
+- **Dev Team** is Responsible for creating development/implementation tasks
+- **Test Team (TEA)** is Responsible for creating the MANDATORY test task (Task X.Y.T)
+- **SM** is Accountable for ensuring ALL tasks are created before story moves to "In progress"
+- **PM** is Responsible for story review and artifact attachment
+- **SM** must verify test task exists before approving story for development
+
+### Task Creation Responsibilities
+
+| Task Type | Created By | Verified By | Notes |
+|-----------|------------|-------------|-------|
+| Development Tasks | Dev Team | SM | Implementation work for acceptance criteria |
+| Test Task (X.Y.T) | Test Team | SM | MANDATORY - Story cannot close without this |
+| Bug Fix Tasks | Dev Team | SM | Created during bug-management workflow |
+| Review Follow-up Tasks | Dev Team | SM | Created during code-review workflow |
+
+**CRITICAL:** 
+- Test task MUST be created by Test Team during grooming
+- SM MUST verify test task exists before allowing story to move to "In progress"
+- Story CANNOT be closed until test task is completed and closed
+
+---
 
 ## Workflow Steps
 
@@ -38,9 +77,12 @@ Groom a story by breaking it down into implementable tasks and creating them in 
 
 **Protocol:** After attaching artifacts, request Scrum Master (SM) to verify and approve transition to "Specified" status. SM will use `mcp_openproject_list_work_package_attachments()` to verify artifacts.
 
-### Step 4: Create Tasks in OpenProject
+### Step 4: Create Development Tasks in OpenProject (Dev Team)
 
-**CRITICAL:** All tasks MUST be created in OpenProject during grooming, before story moves to "In progress".
+**Owner:** Dev Team  
+**Verified By:** SM
+
+**CRITICAL:** Development tasks MUST be created in OpenProject during grooming, before story moves to "In progress".
 
 **⚠️ DUPLICATE PREVENTION:** Always check for existing tasks (including closed ones) before creating new tasks.
 
@@ -61,51 +103,40 @@ def check_existing_tasks(story_id: int) -> list[dict]:
 existing = check_existing_tasks(story_id)
 existing_subjects = {t["subject"] for t in existing}
 
-# Step 4.2: Define all tasks needed for the story
-# CRITICAL: Every Story MUST have a test task (Task X.Y.T)
-all_tasks = [
+# Step 4.2: Define development tasks needed for the story
+# These are created by Dev Team during grooming
+dev_tasks = [
     {
         "subject": "Task 1: [Task Title]",
         "type_id": 36,  # Task
-        "description": "Detailed description with acceptance criteria...",
+        "description": """
+        **Implementation Task**
+        
+        **Acceptance Criteria Mapping:**
+        - AC 1: [How this task satisfies AC 1]
+        - AC 2: [How this task satisfies AC 2]
+        
+        **Estimated Effort:** [30 min - 4 hours]
+        
+        **Implementation Notes:**
+        - [Technical approach]
+        - [Dependencies]
+        """,
     },
     # ... all other implementation tasks
-    {
-        "subject": "Task X.Y.T: Story X.Y Testing and Validation",  # MANDATORY Test task
-        "type_id": {config.openproject.types.task},
-        "description": """
-        **MANDATORY Test Task for Story X.Y**
-        
-        **CRITICAL:** This test task MUST be completed and closed before the Story can be closed.
-        
-        **Activities:**
-        1. Create Story test document: `story-X-Y-test-plan.md`
-        2. Attach test document to Story X.Y
-        3. Validate all acceptance criteria
-        4. Run integration tests
-        5. Verify implementation works as expected
-        6. Verify code follows architecture patterns
-        7. Verify error handling works correctly
-        8. Verify documentation is updated
-        """,
-        "status_id": {config.openproject.statuses.new},
-        "priority_id": {config.openproject.priorities.high}  # High priority - required for story closure
-    },
 ]
 
 # Step 4.3: Filter out duplicates
-new_tasks = [
-    t for t in all_tasks
+new_dev_tasks = [
+    t for t in dev_tasks
     if t["subject"] not in existing_subjects
 ]
 
-if not new_tasks:
-    print(f"No new tasks to create for story {story_id} (all tasks already exist)")
-else:
-    # Step 4.4: Bulk create new tasks
+if new_dev_tasks:
+    # Step 4.4: Bulk create development tasks
     result = mcp_openproject_bulk_create_work_packages(
         project_id={config.openproject.project_id},
-        work_packages=json.dumps(new_tasks),  # Must be JSON string
+        work_packages=json.dumps(new_dev_tasks),
         continue_on_error=True
     )
     
@@ -117,40 +148,202 @@ else:
         )
 ```
 
-### Step 5: Verify Tasks Created
+### Step 5: Create Test Task in OpenProject (Test Team)
 
-1. Verify all tasks are created: `mcp_openproject_get_work_package_children(parent_id=story_id)`
-2. Verify all tasks are linked (parent relationship set)
-3. Verify task descriptions are complete
+**Owner:** Test Team (TEA)  
+**Verified By:** SM
 
-### Step 6: Update Story Status
-
-**ONLY after all tasks are created:**
+**CRITICAL:** Test task is MANDATORY. Story CANNOT be closed without test task completed.
 
 ```python
+# Check if test task already exists
+test_task_exists = any("Task" in t["subject"] and "T:" in t["subject"] and "Testing" in t["subject"] for t in existing)
+
+if not test_task_exists:
+    # Test Team creates the MANDATORY test task
+    test_task = {
+        "subject": "Task X.Y.T: Story X.Y Testing and Validation",  # MANDATORY Test task
+        "type_id": {config.openproject.types.task},
+        "description": """
+        **MANDATORY Test Task for Story X.Y**
+        
+        **Owner:** Test Team (TEA)
+        
+        **CRITICAL:** This test task MUST be completed and closed before the Story can be closed.
+        
+        **Activities:**
+        1. Create Story test document: `story-X-Y-test-plan.md`
+        2. Attach test document to Story X.Y
+        3. Validate all acceptance criteria
+        4. Run unit tests (verify Dev created them)
+        5. Run integration tests
+        6. Verify implementation works as expected
+        7. Verify code follows architecture patterns
+        8. Verify error handling works correctly
+        9. Verify documentation is updated
+        
+        **Test Document Template:**
+        - Test scenarios for each acceptance criterion
+        - Expected vs actual results
+        - Pass/fail status
+        - Bug references (if any)
+        
+        **Subtasks (if needed):**
+        - [ ] Create test plan document
+        - [ ] Execute unit test verification
+        - [ ] Execute integration tests
+        - [ ] Document test results
+        - [ ] Attach test document to story
+        """,
+        "status_id": {config.openproject.statuses.new},
+        "priority_id": {config.openproject.priorities.high}  # High priority - required for story closure
+    }
+    
+    # Create test task
+    result = mcp_openproject_create_work_package(
+        project_id={config.openproject.project_id},
+        subject=test_task["subject"],
+        type_id=test_task["type_id"],
+        description=test_task["description"],
+        status_id=test_task["status_id"],
+        priority_id=test_task["priority_id"]
+    )
+    
+    # Set parent relationship
+    mcp_openproject_set_work_package_parent(
+        work_package_id=result["work_package"]["id"],
+        parent_id=story_id
+    )
+    
+    print(f"✅ Test task created: {test_task['subject']}")
+else:
+    print(f"✅ Test task already exists for story {story_id}")
+```
+
+### Step 6: SM Verifies All Tasks Created
+
+**Owner:** SM (Scrum Master)
+
+**CRITICAL:** SM must verify ALL tasks exist before story can move to "In progress".
+
+```python
+def sm_verify_story_tasks(story_id: int) -> tuple[bool, str]:
+    """
+    SM verification of story tasks before allowing "In progress" status.
+    Returns (is_valid, message)
+    """
+    # Get all tasks for story
+    children = mcp_openproject_get_work_package_children(
+        parent_id=story_id,
+        status="all"
+    )
+    tasks = [c for c in children.get("children", []) if c["type"] == "Task"]
+    
+    # Check 1: Any tasks exist?
+    if not tasks:
+        return False, "❌ BLOCKED: No tasks found. Dev Team must create development tasks."
+    
+    # Check 2: Test task exists? (MANDATORY)
+    test_task = next((t for t in tasks if "T:" in t["subject"] and "Testing" in t["subject"]), None)
+    if not test_task:
+        return False, "❌ BLOCKED: Test task (Task X.Y.T) missing. Test Team must create test task."
+    
+    # Check 3: Development tasks exist?
+    dev_tasks = [t for t in tasks if t["id"] != test_task.get("id")]
+    if not dev_tasks:
+        return False, "⚠️ WARNING: No development tasks found. Dev Team should create implementation tasks."
+    
+    # Check 4: All tasks have descriptions?
+    tasks_without_desc = [t for t in tasks if not t.get("description")]
+    if tasks_without_desc:
+        return False, f"⚠️ WARNING: {len(tasks_without_desc)} tasks missing descriptions."
+    
+    return True, f"✅ VERIFIED: {len(dev_tasks)} development tasks + 1 test task found."
+
+# SM runs verification
+is_valid, message = sm_verify_story_tasks(story_id)
+print(message)
+
+if not is_valid and "BLOCKED" in message:
+    raise ValueError(f"Cannot proceed: {message}")
+```
+
+**SM Verification Checklist:**
+
+- [ ] Development tasks created by Dev Team
+- [ ] **Test task (Task X.Y.T) created by Test Team - MANDATORY**
+- [ ] All tasks linked to story (parent relationship)
+- [ ] Task descriptions include acceptance criteria mapping
+- [ ] Tasks are granular (30 min - 4 hours)
+
+### Step 7: Update Story Status
+
+**Owner:** SM (after verification)
+
+**ONLY after SM verifies all tasks are created:**
+
+```python
+# SM approves story for development
 mcp_openproject_update_work_package(
     work_package_id=story_id,
     status_id={config.openproject.statuses.in_progress}  # Use config, not hardcoded ID
+)
+
+# Add comment documenting approval
+mcp_openproject_add_work_package_comment(
+    work_package_id=story_id,
+    comment=f"""
+    ✅ **Story Grooming Complete - SM Approved**
+    
+    **Tasks Created:**
+    - Development Tasks: {len(dev_tasks)}
+    - Test Task: ✅ Present
+    
+    **Ready for Development**
+    
+    Story is now "In progress". Dev can begin implementation.
+    """
 )
 ```
 
 ## Checklist
 
-**Before marking story as "In progress":**
+### PM Checklist (Story Review & Artifacts)
 
 - [ ] Story acceptance criteria reviewed
-- [ ] Story broken down into tasks
 - [ ] Story file created with all tasks
 - [ ] **If Story is "In specification": All required artifacts attached (Acceptance Criteria, UI Mocks if UI, Technical Specs if required)**
-- [ ] **If Story is "In specification": SM has verified artifacts and approved transition to "Specified"**
-- [ ] **Checked for existing tasks (including closed) - prevents duplicates**
-- [ ] All new tasks created in OpenProject
-- [ ] All tasks linked to story (parent relationship)
-- [ ] **MANDATORY: Test task (Task X.Y.T) created - Story cannot be closed without this task**
-- [ ] Task descriptions include acceptance criteria
-- [ ] Story status updated to "In progress" (use config.openproject.statuses.in_progress)
 
-**CRITICAL:** The test task (Task X.Y.T) is MANDATORY. The Story cannot be closed until this test task is completed and closed successfully. This is enforced by the `update_story_status_based_on_tasks()` helper function.
+### Dev Team Checklist (Development Tasks)
+
+- [ ] **Checked for existing tasks (including closed) - prevents duplicates**
+- [ ] Development tasks created in OpenProject
+- [ ] Tasks map to acceptance criteria
+- [ ] Tasks are granular (30 min - 4 hours)
+- [ ] Task descriptions include implementation notes
+
+### Test Team Checklist (Test Task)
+
+- [ ] **MANDATORY: Test task (Task X.Y.T) created**
+- [ ] Test task includes test plan activities
+- [ ] Test task has subtasks for test document creation
+
+### SM Checklist (Verification & Approval)
+
+- [ ] **Verified development tasks exist** (created by Dev Team)
+- [ ] **Verified test task (Task X.Y.T) exists** (created by Test Team) - MANDATORY
+- [ ] All tasks linked to story (parent relationship)
+- [ ] Task descriptions are complete
+- [ ] **If Story is "In specification": Verified artifacts and approved transition to "Specified"**
+- [ ] **Approved story to move to "In progress"**
+
+---
+
+**CRITICAL:** 
+- Test task (Task X.Y.T) is MANDATORY and must be created by Test Team
+- SM must verify test task exists before approving story for development
+- Story CANNOT be closed until test task is completed and closed
+- This is enforced by the `update_story_status_based_on_tasks()` helper function in `epic-story-lifecycle`
 
 ## Outputs
 
@@ -160,11 +353,36 @@ mcp_openproject_update_work_package(
 
 ## Integration with Other Workflows
 
+### Upstream Workflows (call groom-story)
+
 - **create-story:** Creates story, then calls groom-story
 - **sprint-planning:** Grooms stories for sprint, creates tasks
+
+### Downstream Workflows (depend on groom-story)
+
 - **dev-story:** Verifies tasks exist before starting implementation
+  - Will HALT if no tasks found
+  - Will WARN if test task missing
+  - References groom-story for task creation
+- **test-validation:** Validates test task completion before story closure
+  - Enforces test task requirement
+  - Creates bugs for validation failures
+
+### Workflow Chain
+
+```
+create-story → groom-story → dev-story → test-validation → story closure
+                    ↓
+              [SM Verification Gate]
+              - Dev tasks exist?
+              - Test task exists?
+              - Artifacts attached?
+```
 
 ## References
 
 - **Epic-Story Lifecycle:** `@bmad/bmm/workflows/epic-story-lifecycle` - Complete lifecycle, status transitions, and helper functions
+- **Dev Story:** `@bmad/bmm/workflows/dev-story` - Story implementation (expects groom-story completed)
+- **Test Validation:** `@bmad/bmm/workflows/test-validation` - Story validation and closure
 - **PM Agent:** `@bmad/bmm/agents/pm` - Product Manager agent for story grooming
+- **SM Agent:** `@bmad/bmm/agents/sm` - Scrum Master agent for verification
