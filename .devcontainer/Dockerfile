@@ -56,16 +56,6 @@ RUN npm install -g \
     "nodemon@^3.0.0" \
     "@types/node@^20.0.0"
 
-# Create a script to set up docker and kubectl symlinks
-RUN echo '#!/bin/bash\n\
-if [ -f /usr/bin/docker-host ]; then\n\
-    ln -sf /usr/bin/docker-host /usr/bin/docker\n\
-fi\n\
-if [ -f /usr/local/bin/kubectl-host ]; then\n\
-    ln -sf /usr/local/bin/kubectl-host /usr/local/bin/kubectl\n\
-fi\n\
-' > /usr/local/bin/setup-tools.sh && chmod +x /usr/local/bin/setup-tools.sh
-
 # Create vscode user (standard devcontainer user)
 RUN groupadd --gid 1000 vscode \
     && useradd --uid 1000 --gid vscode --shell /bin/bash --create-home vscode \
@@ -80,7 +70,3 @@ USER vscode
 
 # Set up Python environment
 ENV PATH="/home/vscode/.local/bin:${PATH}"
-
-# Run setup script on container start
-RUN echo 'source /usr/local/bin/setup-tools.sh' >> ~/.bashrc
-
