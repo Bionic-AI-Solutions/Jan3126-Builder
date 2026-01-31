@@ -18,6 +18,7 @@ This devcontainer follows industry best practices:
 - **Docker CLI** - Installed in container; connects to host Docker engine via mounted socket
 - **GitHub CLI (gh)** - Installed for repo management and auth
 - **Claude Code CLI** - Installed on first start via post-create script (`~/.local/bin`)
+- **agent-browser** - Installed globally via npm; Chromium downloaded by post-create
 - **kubectl** - Installed in container; uses mounted `~/.kube/config` for cluster access
 - **Development Tools**:
   - Python: black, flake8, pylint, pytest, pytest-asyncio, mypy
@@ -46,6 +47,7 @@ The devcontainer automatically mounts:
 3. Wait for the container to build and start (first time may take a few minutes)
 4. The post-create script will automatically:
    - Install Claude Code CLI (if not present)
+   - Install agent-browser and download Chromium
    - Verify Docker (host engine), kubectl, and gh
    - Create Python virtual environment if needed
    - Install Node.js dependencies if `package.json` exists

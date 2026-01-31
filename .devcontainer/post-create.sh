@@ -17,6 +17,12 @@ fi
 export PATH="${HOME}/.local/bin:${PATH}"
 echo 'export PATH="${HOME}/.local/bin:${PATH}"' >> ~/.bashrc 2>/dev/null || true
 
+# Install agent-browser and download Chromium
+echo "📦 Installing agent-browser..."
+npm install -g agent-browser
+agent-browser install  # Download Chromium
+echo "✅ agent-browser installed"
+
 # Verify Docker access (uses host engine via mounted socket)
 if docker ps > /dev/null 2>&1; then
     echo "✅ Docker daemon accessible (host engine)"
