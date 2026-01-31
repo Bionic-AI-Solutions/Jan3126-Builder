@@ -49,3 +49,6 @@ _bmad-output/
 # BMAD project-specific configuration (keep template, ignore actual config)
 _bmad/_config/project-config.yaml
 CLAUDE.md
+
+# Claude/Cursor local overrides (keep example, ignore actual)
+.claude/settings.local.json

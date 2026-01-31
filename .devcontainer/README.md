@@ -15,8 +15,10 @@ This devcontainer follows industry best practices:
 
 - **Python 3.11** with Poetry for dependency management
 - **Node.js 20.x** with npm and common development tools
-- **Docker CLI** - Uses host Docker daemon via socket mount
-- **kubectl** - Mounted from host, configured with your Kubernetes cluster access
+- **Docker CLI** - Installed in container; connects to host Docker engine via mounted socket
+- **GitHub CLI (gh)** - Installed for repo management and auth
+- **Claude Code CLI** - Installed on first start via post-create script (`~/.local/bin`)
+- **kubectl** - Installed in container; uses mounted `~/.kube/config` for cluster access
 - **Development Tools**:
   - Python: black, flake8, pylint, pytest, pytest-asyncio, mypy
   - Node.js: TypeScript, ts-node, ESLint, Prettier, nodemon
@@ -33,11 +35,9 @@ This devcontainer follows industry best practices:
 
 The devcontainer automatically mounts:
 
-1. **Docker Socket** (`/var/run/docker.sock`) - Allows container to use host Docker daemon
-2. **Docker CLI** (`/usr/bin/docker`) - Docker client from host
-3. **kubectl** (`/usr/local/bin/kubectl`) - Kubernetes CLI from host
-4. **Kubernetes Config** (`~/.kube`) - Your Kubernetes cluster configuration
-5. **MCP Config** (`~/.cursor/mcp.json`) - MCP server configuration for Cursor
+1. **Docker Socket** (`/var/run/docker.sock`) - Container Docker CLI talks to host Docker engine
+2. **Kubernetes Config** (`~/.kube`) - Your Kubernetes cluster configuration
+3. **MCP Config** (`~/.cursor/mcp.json`) - MCP server configuration for Cursor
 
 ## Usage
 
@@ -45,8 +45,8 @@ The devcontainer automatically mounts:
 2. When prompted, click "Reopen in Container" or use Command Palette: `Dev Containers: Reopen in Container`
 3. Wait for the container to build and start (first time may take a few minutes)
 4. The post-create script will automatically:
-   - Set up Docker and kubectl symlinks
-   - Verify Docker and Kubernetes access
+   - Install Claude Code CLI (if not present)
+   - Verify Docker (host engine), kubectl, and gh
    - Create Python virtual environment if needed
    - Install Node.js dependencies if `package.json` exists
    - Install Python dependencies with Poetry if `pyproject.toml` exists
@@ -71,6 +71,12 @@ docker ps
 # Check kubectl
 kubectl version --client
 kubectl cluster-info  # Should show your cluster info
+
+# Check GitHub CLI
+gh --version
+
+# Check Claude Code CLI (after first post-create)
+claude --version
 ```
 
 ## Adding .cursorrules

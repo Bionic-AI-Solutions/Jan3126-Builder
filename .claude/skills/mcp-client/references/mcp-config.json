@@ -1,0 +1,97 @@
+{
+    "mcpServers": {
+      "livekit-docs": {
+        "url": "https://docs.livekit.io/mcp"
+      },
+      "context7": {
+        "url": "https://mcp.context7.com/mcp",
+        "headers": {
+          "CONTEXT7_API_KEY": "<CONTEXT7_API_KEY>"
+        }
+      },
+      "dockerhub": {
+        "command": "docker",
+        "args": [
+          "run",
+          "-i",
+          "--rm",
+          "-e",
+          "HUB_PAT_TOKEN=<DOCKER_HUB_PAT_TOKEN>",
+          "mcp/dockerhub@sha256:3d4383a638c79329dd67a7039c475827f2ebe87349743bd4dfe32d8d099cf3bb",
+          "--transport=stdio",
+          "--username=docker4zerocool"
+        ]
+      },
+      "gpu-ai": {
+        "url": "http://api.askcollections.com/mcp/sse",
+        "transport": "sse"
+      },
+      "calculator": {
+        "url": "https://mcp.baisoln.com/calculator/mcp",
+        "transport": "http",
+        "description": "Calculator MCP Server - Remote access via Kong proxy"
+      },
+      "postgres": {
+        "url": "https://mcp.baisoln.com/postgres/mcp",
+        "transport": "http",
+        "description": "PostgreSQL MCP Server - Remote access via Kong proxy with multi-tenant support"
+      },
+      "minio": {
+        "url": "https://mcp.baisoln.com/minio/mcp",
+        "transport": "http",
+        "description": "MinIO object storage MCP server - Remote access via Kong proxy with multi-tenant support"
+      },
+      "pdf-generator": {
+        "url": "https://mcp.baisoln.com/pdf-generator/mcp",
+        "transport": "http",
+        "description": "PDF Generator MCP Server - Remote access via Kong proxy"
+      },
+      "ffmpeg": {
+        "url": "https://mcp.baisoln.com/ffmpeg/mcp",
+        "transport": "http",
+        "description": "FFmpeg MCP Server - Video/audio processing with comprehensive FFmpeg capabilities"
+      },
+      "mail": {
+        "url": "https://mcp.baisoln.com/mail/mcp",
+        "transport": "http",
+        "description": "Mail Service MCP Server - Remote access via Kong proxy with multi-tenant support"
+      },
+      "archon": {
+        "transport": "http",
+        "url": "http://192.168.0.10:8051/mcp"
+      },
+      "openproject": {
+        "url": "https://mcp.baisoln.com/openproject/mcp",
+        "transport": "http",
+        "description": "OpenProject MCP Server - Remote access via Kong proxy with multi-tenant support"
+      },
+      "meilisearch": {
+        "url": "https://mcp.baisoln.com/meilisearch/mcp",
+        "transport": "http",
+        "description": "Meilisearch MCP Server - Remote access via Kong proxy with multi-tenant support"
+      },
+      "genimage": {
+        "url": "https://mcp.baisoln.com/genimage/mcp",
+        "transport": "http",
+        "description": "GenImage MCP Server - AI image generation with Runware API - Remote access via Kong proxy"
+      },
+      "figma": {
+        "url": "https://mcp.figma.com/mcp",
+        "headers": {}
+      },
+      "n8n-mcp": {
+        "command": "npx",
+        "args": [
+          "-y",
+          "n8n-mcp"
+        ],
+        "env": {
+          "MCP_MODE": "stdio",
+          "LOG_LEVEL": "error",
+          "DISABLE_CONSOLE_OUTPUT": "true",
+          "N8N_API_URL": "https://salilkadam.app.n8n.cloud",
+          "N8N_API_KEY": "<N8N_API_KEY>"
+        }
+      }
+    }
+  }

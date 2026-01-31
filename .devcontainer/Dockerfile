@@ -30,13 +30,23 @@ RUN KUBECTL_VERSION=$(curl -L -s https://dl.k8s.io/release/stable.txt) \
     && mv kubectl /usr/local/bin/kubectl \
     && kubectl version --client
 
-# Install Docker CLI (will use host's Docker daemon via mount)
+# Install Docker CLI (will use host's Docker daemon via mounted socket)
 RUN curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg \
     && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null \
     && apt-get update \
     && apt-get install -y docker-ce-cli \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
+
+# Install GitHub CLI (gh)
+RUN curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | gpg --dearmor -o /usr/share/keyrings/githubcli-archive-keyring.gpg \
+    && chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg \
+    && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
+    && apt-get update \
+    && apt-get install -y gh \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* \
+    && gh --version
 
 # Install common Python packages (with version constraints for stability)
 RUN pip3 install --no-cache-dir \
@@ -56,9 +66,11 @@ RUN npm install -g \
     "nodemon@^3.0.0" \
     "@types/node@^20.0.0"
 
-# Create vscode user (standard devcontainer user)
+# Create vscode user and docker group (GID 999 matches common host docker group for socket access)
 RUN groupadd --gid 1000 vscode \
+    && groupadd --gid 999 docker 2>/dev/null || true \
     && useradd --uid 1000 --gid vscode --shell /bin/bash --create-home vscode \
+    && usermod -aG docker vscode \
     && mkdir -p /home/vscode/.local/bin \
     && chown -R vscode:vscode /home/vscode
 
