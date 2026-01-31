@@ -27,7 +27,7 @@ This uses **micro-file architecture** with **sequential conversation orchestrati
 
 ### Configuration Loading
 
-Load config from `{project-root}/_bmad/_config/project-config.yaml` and resolve:
+Load config from `{project-root}/_bmad/core/config.yaml` and resolve:
 
 - `project_name`, `output_folder`, `user_name`
 - `communication_language`, `document_output_language`, `user_skill_level`
@@ -175,18 +175,6 @@ If conversation naturally concludes:
 
 - Ask user if they'd like to continue or end party mode
 - Exit gracefully when user indicates completion
-
----
-
-## TTS INTEGRATION
-
-Party mode includes Text-to-Speech for each agent response:
-
-**TTS Protocol:**
-
-- Trigger TTS immediately after each agent's text response
-- Use agent's merged voice configuration from manifest
-- Format: `Bash: .claude/hooks/bmad-speak.sh "[Agent Name]" "[Their response]"`
 
 ---
 

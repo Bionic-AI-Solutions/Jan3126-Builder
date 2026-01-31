@@ -3,7 +3,7 @@ description: "Create system architecture diagrams, ERDs, UML diagrams, or genera
 author: "BMad"
 
 # Config values
-config_source: "{project-root}/_bmad/_config/project-config.yaml"
+config_source: "{project-root}/_bmad/bmm/config.yaml"
 output_folder: "{config_source}:output_folder"
 
 # Workflow components

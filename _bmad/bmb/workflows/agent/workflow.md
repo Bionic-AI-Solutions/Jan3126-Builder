@@ -61,7 +61,7 @@ This workflow supports three modes:
 
 ### 1. Configuration Loading
 
-Load and read full config from `{project-root}/_bmad/_config/project-config.yaml`:
+Load and read full config from `{project-root}/_bmad/bmb/config.yaml`:
 
 - `project_name`, `user_name`, `communication_language`, `document_output_language`, `bmb_creations_output_folder`
 - ✅ YOU MUST ALWAYS SPEAK OUTPUT In your Agent communication style with the config `{communication_language}`

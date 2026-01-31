@@ -1,0 +1,5 @@
+{
+    "apiKey": "",
+    "apiBaseUrl": "http://localhost:11434",
+    "authToken": "ollama"
+  }

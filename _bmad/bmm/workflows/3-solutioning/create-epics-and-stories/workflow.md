@@ -12,33 +12,6 @@ web_bundle: true
 
 ---
 
-## RACI MATRIX
-
-| Activity | PM | SM | Dev | TEA | Architect | UX Designer |
-|----------|----|----|-----|-----|-----------|-------------|
-| Epic Creation | R/A | I | C | I | C | C |
-| Feature Creation | R/A | I | C | I | C | C |
-| Story Creation | R/A | C | C | I | C | C |
-| Task Definition | R | C | C | C | C | I |
-| Acceptance Criteria | R/A | A | C | C | I | C |
-| Technical Decomposition | C | I | R | I | A | I |
-| UI Story Definition | R | I | C | I | I | A |
-| Test Task Creation | R | C | C | A | I | I |
-| Integration Test Story | R | I | C | R/A | I | I |
-
-**Legend:** R = Responsible, A = Accountable, C = Consulted, I = Informed
-
-### Key RACI Notes
-- **PM** is Responsible and Accountable for creating Epics, Features, Stories
-- **PM** must check for existing work packages before creating (duplicate prevention)
-- **PM** must ensure incremental development structure (no forward dependencies)
-- **Architect** is Consulted on technical decomposition and feature architecture
-- **UX Designer** is Accountable for UI-related story definitions
-- **TEA** is Accountable for Integration Test Story creation at Feature level
-- **SM** is Accountable for verifying artifacts before "Specified" status
-
----
-
 ## WORKFLOW ARCHITECTURE
 
 This uses **step-file architecture** for disciplined execution:
@@ -46,7 +19,7 @@ This uses **step-file architecture** for disciplined execution:
 ### Core Principles
 
 - **Micro-file Design**: Each step of the overall goal is a self contained instruction file that you will adhere too 1 file as directed at a time
-- **Just-In-Time Loading**: Only 1 current step file will be loaded, read, and executed to completion - never load future step files until told to do so
+- **Just-In-Time Loading**: Only 1 current step file will be loaded and followed to completion - never load future step files until told to do so
 - **Sequential Enforcement**: Sequence within the step files must be completed in order, no skipping or optimization allowed
 - **State Tracking**: Document progress in output file frontmatter using `stepsCompleted` array when a workflow produces a document
 - **Append-Only Building**: Build documents by appending content as directed to the output file
@@ -58,7 +31,7 @@ This uses **step-file architecture** for disciplined execution:
 3. **WAIT FOR INPUT**: If a menu is presented, halt and wait for user selection
 4. **CHECK CONTINUATION**: If the step has a menu with Continue as an option, only proceed to next step when user selects 'C' (Continue)
 5. **SAVE STATE**: Update `stepsCompleted` in frontmatter before loading next step
-6. **LOAD NEXT**: When directed, load, read entire file, then execute the next step file
+6. **LOAD NEXT**: When directed, read fully and follow the next step file
 
 ### Critical Rules (NO EXCEPTIONS)
 
@@ -76,11 +49,11 @@ This uses **step-file architecture** for disciplined execution:
 
 ### 1. Configuration Loading
 
-Load and read full config from {project-root}/_bmad/_config/project-config.yaml and resolve:
+Load and read full config from {project-root}/_bmad/bmm/config.yaml and resolve:
 
 - `project_name`, `output_folder`, `planning_artifacts`, `user_name`, `communication_language`, `document_output_language`
 - ✅ YOU MUST ALWAYS SPEAK OUTPUT In your Agent communication style with the config `{communication_language}`
 
 ### 2. First Step EXECUTION
 
-Load, read the full file and then execute `{project-root}/_bmad/bmm/workflows/3-solutioning/create-epics-and-stories/steps/step-01-validate-prerequisites.md` to begin the workflow.
+Read fully and follow: `{project-root}/_bmad/bmm/workflows/3-solutioning/create-epics-and-stories/steps/step-01-validate-prerequisites.md` to begin the workflow.
