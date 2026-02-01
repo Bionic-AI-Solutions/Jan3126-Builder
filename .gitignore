@@ -42,6 +42,9 @@ tmp/
 temp/
 *.tmp
 
+# Cache
+.cache/
+
 
 # BMAD generated output
 _bmad-output/

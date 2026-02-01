@@ -13,9 +13,13 @@ else
     echo "✅ Claude Code CLI already installed"
 fi
 
-# Ensure ~/.local/bin is on PATH for Claude CLI
+# Ensure ~/.local/bin is on PATH for Claude CLI and npm global bins
 export PATH="${HOME}/.local/bin:${PATH}"
 echo 'export PATH="${HOME}/.local/bin:${PATH}"' >> ~/.bashrc 2>/dev/null || true
+
+# Use user prefix for npm global installs (avoid EACCES when not root)
+mkdir -p "${HOME}/.local"
+npm config set prefix "${HOME}/.local"
 
 # Install agent-browser and download Chromium
 echo "📦 Installing agent-browser..."

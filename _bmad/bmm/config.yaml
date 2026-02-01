@@ -3,7 +3,7 @@
 # Version: 6.0.0-beta.0
 # Date: 2026-01-31T00:07:44.813Z
 
-project_name: virgin-devcontainer
+project_name: WABuilder
 user_skill_level: intermediate
 planning_artifacts: "{project-root}/_bmad-output/planning-artifacts"
 implementation_artifacts: "{project-root}/_bmad-output/implementation-artifacts"
