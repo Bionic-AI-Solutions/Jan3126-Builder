@@ -54,12 +54,6 @@
       "allowLocalBinding": true
     }
   },
-  "enabledMcpjsonServers": [
-    "livekit-docs",
-    "context7",
-    "archon",
-    "openproject",
-    "genimage"
-  ],
-  "enableAllProjectMcpServers": true  
+  "enabledMcpjsonServers": [],
+  "enableAllProjectMcpServers": false
 }

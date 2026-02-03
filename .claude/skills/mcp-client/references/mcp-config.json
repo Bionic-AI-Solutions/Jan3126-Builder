@@ -79,6 +79,17 @@
         "url": "https://mcp.figma.com/mcp",
         "headers": {}
       },
+      "nano-banana": {
+        "command": "npx",
+        "args": [
+          "-y",
+          "nano-banana-mcp"
+        ],
+        "env": {
+          "GEMINI_API_KEY": "AIzaSyCGAl243t6QZ0NeugPOBlOYTzOYRw9cU6k"
+        },
+        "description": "Nano Banana MCP Server - AI-powered wireframe and mockup generation using Google Gemini"
+      },
       "n8n-mcp": {
         "command": "npx",
         "args": [
@@ -92,6 +103,11 @@
           "N8N_API_URL": "https://salilkadam.app.n8n.cloud",
           "N8N_API_KEY": "<N8N_API_KEY>"
         }
+      },
+      "qdrant": {
+        "command": "python",
+        "args": ["/workspaces/wabuilder/mcp-servers/qdrant-mcp/server.py"],
+        "description": "Qdrant Cloud vector database with multi-tenant support for WABuilder platform"
       }
     }
   }

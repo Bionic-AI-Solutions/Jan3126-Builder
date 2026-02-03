@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__archon__rag_search_knowledge_base"
+    ]
+  },
+  "enabledMcpjsonServers": [
+    "livekit-docs",
+    "context7",
+    "dockerhub",
+    "gpu-ai",
+    "calculator",
+    "postgres",
+    "minio",
+    "pdf-generator",
+    "ffmpeg",
+    "mail",
+    "archon",
+    "openproject",
+    "meilisearch",
+    "genimage",
+    "figma",
+    "n8n-mcp"
+  ],
+  "enableAllProjectMcpServers": true
+}
