@@ -1,27 +1,38 @@
 #!/bin/bash
+# Post-create script for devcontainer setup.
+# Optional steps are wrapped so missing network or install failures don't fail the container.
 
-# Post-create script for devcontainer setup
-
+set -e
 echo "🚀 Setting up development environment..."
 
-# Install Claude Code CLI (runs as vscode user, installs to ~/.local/bin)
+# Ensure ~/.local/bin is on PATH
+export PATH="${HOME}/.local/bin:${PATH}"
+echo 'export PATH="${HOME}/.local/bin:${PATH}"' >> ~/.bashrc 2>/dev/null || true
+
+# Install Claude Code CLI (optional - do not fail container if install fails)
 if ! command -v claude > /dev/null 2>&1; then
     echo "📦 Installing Claude Code CLI..."
-    curl -fsSL https://claude.ai/install.sh | bash
-    echo "✅ Claude Code CLI installed"
+    if curl -fsSL https://claude.ai/install.sh 2>/dev/null | bash 2>/dev/null; then
+        echo "✅ Claude Code CLI installed"
+    else
+        echo "⚠️  Claude Code CLI install skipped (network or script failed)"
+    fi
 else
     echo "✅ Claude Code CLI already installed"
 fi
 
-# Ensure ~/.local/bin is on PATH for Claude CLI
-export PATH="${HOME}/.local/bin:${PATH}"
-echo 'export PATH="${HOME}/.local/bin:${PATH}"' >> ~/.bashrc 2>/dev/null || true
-
-# Install agent-browser and download Chromium
-echo "📦 Installing agent-browser..."
-npm install -g agent-browser
-agent-browser install  # Download Chromium
-echo "✅ agent-browser installed"
+# Install agent-browser (optional - do not fail container if install fails)
+if command -v npm > /dev/null 2>&1; then
+    echo "📦 Installing agent-browser..."
+    if npm install -g agent-browser 2>/dev/null; then
+        agent-browser install 2>/dev/null || echo "⚠️  agent-browser Chromium download skipped"
+        echo "✅ agent-browser installed"
+    else
+        echo "⚠️  agent-browser install skipped"
+    fi
+else
+    echo "⚠️  npm not found, skipping agent-browser"
+fi
 
 # Verify Docker access (uses host engine via mounted socket)
 if docker ps > /dev/null 2>&1; then
@@ -48,19 +59,19 @@ fi
 # Set up Python virtual environment (optional)
 if [ ! -d ".venv" ]; then
     echo "📦 Creating Python virtual environment..."
-    python3 -m venv .venv
+    python3 -m venv .venv 2>/dev/null || echo "⚠️  .venv creation skipped"
 fi
 
 # Set up Node.js (if package.json exists)
 if [ -f "package.json" ]; then
     echo "📦 Installing Node.js dependencies..."
-    npm install
+    npm install 2>/dev/null || echo "⚠️  npm install skipped"
 fi
 
 # Set up Poetry (if pyproject.toml exists)
 if [ -f "pyproject.toml" ]; then
     echo "📦 Installing Python dependencies with Poetry..."
-    poetry install
+    poetry install 2>/dev/null || echo "⚠️  poetry install skipped"
 fi
 
 echo "✨ Development environment setup complete!"

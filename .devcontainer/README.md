@@ -27,10 +27,25 @@ This devcontainer follows industry best practices:
 ## Prerequisites
 
 - Docker Desktop or Docker Engine running on your host
-- VS Code with the "Dev Containers" extension installed
+- VS Code (or Cursor) with the "Dev Containers" extension installed
 - Docker socket accessible (default: `/var/run/docker.sock`)
-- kubectl installed on host (default: `/usr/local/bin/kubectl`)
-- Kubernetes config file at `~/.kube/config`
+
+**Required for mounts (container will fail to start if these are missing):**
+
+The devcontainer uses **`USERPROFILE`** (Windows) / **`HOME`** for these paths. Ensure the following exist on the host:
+
+- **`<USERPROFILE or HOME>/.kube`** – Folder. Create an empty folder if you don’t use Kubernetes yet.  
+  - Windows: `C:\Users\<You>\.kube` (uses `USERPROFILE`)  
+  - macOS/Linux: `~/.kube` (set `USERPROFILE=$HOME` in your shell profile if mounts fail)
+- **`<USERPROFILE or HOME>/.cursor/mcp.json`** – File. Use `{}` if you don’t use MCP.  
+  - Windows: `C:\Users\<You>\.cursor\mcp.json`  
+  - macOS/Linux: `~/.cursor/mcp.json`
+
+**One-time setup (Windows PowerShell)** – run before first open if those paths don’t exist:
+
+```powershell
+New-Item -ItemType Directory -Force $env:USERPROFILE\.kube; New-Item -ItemType Directory -Force $env:USERPROFILE\.cursor; if (!(Test-Path $env:USERPROFILE\.cursor\mcp.json)) { '{}' | Set-Content $env:USERPROFILE\.cursor\mcp.json }
+```
 
 ## What Gets Mounted
 
@@ -91,13 +106,24 @@ If you have a `.cursorrules` file in your workspace root, you can add it to the 
 
 ## Troubleshooting
 
+### "Rebuild and open" or "Failed to create container" / mount errors
+
+1. **Create mount paths on the host** (most common cause on Windows):
+   - Create folder: `%USERPROFILE%\.kube` (e.g. `C:\Users\YourName\.kube`)
+   - Create file: `%USERPROFILE%\.cursor\mcp.json` with content `{}` (create `.cursor` folder if needed)
+   - Then try **Dev Containers: Rebuild and Reopen in Container** again.
+
+2. **Docker Desktop** must be running before opening the dev container.
+
+3. **Post-create script failed**: Optional installs (Claude CLI, agent-browser) no longer fail the container; you’ll see warnings but the container should still open. If it still fails, check the **Dev Containers** output panel for the exact error.
+
 ### Docker not accessible
 - Ensure Docker Desktop/Engine is running on your host
 - Check that `/var/run/docker.sock` exists and is accessible
 
 ### kubectl not working
-- Verify `~/.kube/config` exists on your host
-- Check that kubectl is installed at `/usr/local/bin/kubectl` (or update the mount path)
+- Verify `~/.kube` exists on your host and contains `config` (or an empty folder is fine)
+- kubectl is installed inside the container; the mount only provides your cluster config
 
 ### Permission issues
 - The container runs as user `vscode` (UID 1000)
