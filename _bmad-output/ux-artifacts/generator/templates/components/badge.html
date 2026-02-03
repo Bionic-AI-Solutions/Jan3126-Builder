@@ -1,0 +1,14 @@
+{# Badge Component
+   Usage: {% include 'components/badge.html' with
+            type='success'|'warning'|'error'|'neutral',
+            text='Badge Text' %}
+#}
+{% set type = type|default('neutral') %}
+{% set classes = {
+  'success': 'badge badge-success',
+  'warning': 'badge badge-warning',
+  'error': 'badge badge-error',
+  'neutral': 'badge badge-neutral'
+} %}
+
+<span class="{{ classes[type] }}">{{ text }}</span>

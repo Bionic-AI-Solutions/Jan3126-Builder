@@ -1,0 +1,16 @@
+{# Filter Tabs Component (Admin Portal)
+   Usage: {% include 'components/filter-tabs.html' with
+            filters=[
+              {'label': 'All', 'count': 12, 'active': true},
+              {'label': 'Pending', 'count': 5, 'active': false}
+            ] %}
+#}
+<div style="display: flex; gap: var(--space-2); padding: var(--space-4) 0; border-bottom: 1px solid var(--color-neutral-200);">
+  {% for filter in filters %}
+  <button style="padding: var(--space-2) var(--space-4); border-radius: var(--radius-md); border: 1px solid {% if filter.active %}var(--color-primary-main){% else %}var(--color-neutral-300){% endif %}; background: {% if filter.active %}var(--color-primary-light){% else %}transparent{% endif %}; cursor: pointer;">
+    <span class="label-base" style="color: {% if filter.active %}var(--color-primary-dark){% else %}var(--color-neutral-700){% endif %};">
+      {{ filter.label }} <span class="body-small">({{ filter.count }})</span>
+    </span>
+  </button>
+  {% endfor %}
+</div>

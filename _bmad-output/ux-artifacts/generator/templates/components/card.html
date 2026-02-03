@@ -1,0 +1,11 @@
+{# Card Component
+   Usage: {% include 'components/card.html' with
+            title=optional_title,
+            content=card_content_html %}
+#}
+<div class="card">
+  {% if title %}
+  <h3 class="heading-h4" style="margin-bottom: var(--space-3);">{{ title }}</h3>
+  {% endif %}
+  {{ content|safe }}
+</div>

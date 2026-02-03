@@ -1,0 +1,52 @@
+{% extends "layouts/base.html" %}
+
+{% block extra_styles %}
+<style>
+  body {
+    background: var(--color-bg-cream);
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+  }
+
+  .mobile-viewport {
+    max-width: 393px;
+    margin: 0 auto;
+    background: var(--color-bg-cream);
+    min-height: 100vh;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .mobile-content {
+    padding: var(--space-4);
+  }
+
+  .safe-area-top {
+    height: 59px;
+  }
+
+  .safe-area-bottom {
+    height: 34px;
+  }
+
+  /* Fidelity indicator */
+  .fidelity-badge {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    z-index: 1000;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="fidelity-badge">{{ fidelity|upper }} FIDELITY</div>
+<div class="mobile-viewport">
+  {% block mobile_content %}{% endblock %}
+</div>
+{% endblock %}

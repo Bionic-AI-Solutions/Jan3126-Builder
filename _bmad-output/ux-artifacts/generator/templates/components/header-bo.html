@@ -1,0 +1,15 @@
+{# Business Owner Portal Header (Mobile)
+   Usage: {% include 'components/header-bo.html' with
+            title='Dashboard',
+            show_settings=true|false %}
+#}
+<div style="height: 64px; background: var(--color-secondary-main); padding: 12px var(--space-4); display: flex; align-items: center; justify-content: space-between; position: fixed; top: 0; left: 0; right: 0; z-index: 100;">
+  <h1 class="heading-h3" style="color: white;">{{ title }}</h1>
+  {% if show_settings %}
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+    <circle cx="12" cy="12" r="3"></circle>
+    <path d="M12 1v6m0 6v6m-9-9h6m6 0h6"></path>
+  </svg>
+  {% endif %}
+</div>
+<div style="height: 64px;"></div> <!-- Spacer for fixed header -->

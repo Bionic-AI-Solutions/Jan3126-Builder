@@ -1,0 +1,31 @@
+{# Business Row Component (Developer Portal Table)
+   Usage: {% include 'components/business-row.html' with
+            business_name='Acme Corp',
+            status='Active',
+            automation=95,
+            actions=['View', 'Edit'] %}
+#}
+<tr style="border-bottom: 1px solid var(--color-neutral-100);">
+  <td style="padding: var(--space-4);" class="body-base">
+    <div style="font-weight: 500;">{{ business_name }}</div>
+  </td>
+  <td style="padding: var(--space-4);">
+    {% set status_class = 'success' if status == 'Active' else ('warning' if status == 'Testing' else 'neutral') %}
+    {% include 'components/badge.html' with type=status_class, text=status %}
+  </td>
+  <td style="padding: var(--space-4);" class="body-base">
+    <div style="display: flex; align-items: center; gap: var(--space-2);">
+      <div style="flex: 1; background: var(--color-neutral-200); border-radius: var(--radius-full); height: 6px; overflow: hidden;">
+        <div style="background: var(--color-primary-main); height: 100%; width: {{ automation }}%;"></div>
+      </div>
+      <div class="body-small">{{ automation }}%</div>
+    </div>
+  </td>
+  <td style="padding: var(--space-4);">
+    <div style="display: flex; gap: var(--space-2);">
+      {% for action in actions %}
+      <button class="button button-primary button-small">{{ action }}</button>
+      {% endfor %}
+    </div>
+  </td>
+</tr>

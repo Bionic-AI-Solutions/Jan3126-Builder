@@ -1,0 +1,57 @@
+{% extends "layouts/mobile-portal.html" %}
+
+{% block title %}Escalation Detail - WABuilder Business Owner Portal{% endblock %}
+
+{% block mobile_content %}
+{% include 'components/header-bo.html' with title='Escalation Details', show_settings=false %}
+
+<div class="mobile-content" style="display: flex; flex-direction: column; gap: var(--space-4);">
+  <!-- Status Badge -->
+  <div style="display: flex; justify-content: space-between; align-items: center;">
+    <h2 class="heading-h3">Weekend Hours Question</h2>
+    {% include 'components/badge.html' with type='error', text='Urgent' %}
+  </div>
+
+  <!-- Customer Info -->
+  <div class="card">
+    <div class="label-base" style="margin-bottom: var(--space-2);">Customer</div>
+    <div class="body-large">Sarah Johnson</div>
+    <div class="body-small" style="color: var(--color-neutral-500);">+1 (555) 123-4567</div>
+  </div>
+
+  <!-- Conversation Context -->
+  <div class="card">
+    <div class="label-base" style="margin-bottom: var(--space-3);">Conversation</div>
+
+    <div style="display: flex; flex-direction: column; gap: var(--space-3);">
+      <!-- Customer Message -->
+      <div style="background: var(--color-neutral-50); padding: var(--space-3); border-radius: var(--radius-md);">
+        <div class="body-small" style="color: var(--color-neutral-500); margin-bottom: var(--space-1);">Customer • 2 min ago</div>
+        <div class="body-base">Hi, do you offer appointments on weekends? I work during the week.</div>
+      </div>
+
+      <!-- AI Response -->
+      <div style="background: var(--color-primary-light); padding: var(--space-3); border-radius: var(--radius-md); border-left: 3px solid var(--color-primary-main);">
+        <div class="body-small" style="color: var(--color-primary-dark); margin-bottom: var(--space-1);">AI Assistant • 1 min ago</div>
+        <div class="body-base">I need to check with the owner about weekend availability. Let me get that information for you.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Why Escalated -->
+  <div class="card" style="background: var(--color-warning-light); border-left: 3px solid var(--color-warning-main);">
+    <div class="label-base" style="margin-bottom: var(--space-2);">Why This Was Escalated</div>
+    <div class="body-base">AI couldn't find weekend hours in your business information. This needs your decision.</div>
+  </div>
+
+  <!-- Action Buttons -->
+  <div style="display: flex; flex-direction: column; gap: var(--space-3);">
+    <button class="button button-primary button-large" style="width: 100%;">
+      Open in WhatsApp
+    </button>
+    <button class="button button-secondary button-base" style="width: 100%;">
+      Mark as Resolved
+    </button>
+  </div>
+</div>
+{% endblock %}

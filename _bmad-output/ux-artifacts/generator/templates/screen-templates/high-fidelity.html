@@ -1,0 +1,30 @@
+{# High-Fidelity Screen Template
+   This template is for fully specified screens with pixel-accurate spacing,
+   realistic data, and all interactive states shown.
+
+   Variables expected:
+   - portal: 'business-owner', 'developer', 'admin'
+   - layout: 'mobile-portal' or 'desktop-portal'
+   - screen_id, category, fidelity, components_used, user_journey, critical_path
+   - screen_content: The main content blocks
+#}
+
+{% if portal == 'business-owner' %}
+  {% set layout_template = 'layouts/mobile-portal.html' %}
+{% else %}
+  {% set layout_template = 'layouts/desktop-portal.html' %}
+{% endif %}
+
+{% extends layout_template %}
+
+{% block title %}{{ screen_name }} - WABuilder {{ portal|title }} Portal{% endblock %}
+
+{% if portal == 'business-owner' %}
+  {% block mobile_content %}
+    {{ screen_content|safe }}
+  {% endblock %}
+{% else %}
+  {% block desktop_content %}
+    {{ screen_content|safe }}
+  {% endblock %}
+{% endif %}

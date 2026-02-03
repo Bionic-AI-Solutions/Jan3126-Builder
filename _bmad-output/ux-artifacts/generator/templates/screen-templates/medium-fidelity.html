@@ -1,0 +1,218 @@
+{# Medium-Fidelity Screen Template
+   This template is for partially specified screens with template-based layouts,
+   representative content, and simplified details.
+
+   Variables expected:
+   - portal: 'business-owner', 'developer', 'admin'
+   - layout: 'mobile-portal' or 'desktop-portal'
+   - screen_id, category, fidelity, components_used, user_journey, critical_path
+   - screen_content: The main content blocks (optional - will auto-generate if missing)
+#}
+
+{% if portal == 'business-owner' %}
+  {% set layout_template = 'layouts/mobile-portal.html' %}
+{% else %}
+  {% set layout_template = 'layouts/desktop-portal.html' %}
+{% endif %}
+
+{% extends layout_template %}
+
+{% block title %}{{ screen_name }} - WABuilder {{ portal|title }} Portal{% endblock %}
+
+{% if portal == 'business-owner' %}
+  {% block mobile_content %}
+    {% if screen_content %}
+      {{ screen_content|safe }}
+    {% else %}
+      {# Auto-generate basic mobile layout #}
+      <!-- Header -->
+      <div style="height: 64px; background: var(--color-secondary-main); padding: 12px var(--space-4); display: flex; align-items: center; justify-content: space-between; position: fixed; top: 0; left: 0; right: 0; z-index: 100; max-width: 393px; margin: 0 auto;">
+        <h1 class="heading-h3" style="color: white;">{{ screen_name }}</h1>
+      </div>
+      <div style="height: 64px;"></div>
+
+      <div class="mobile-content" style="display: flex; flex-direction: column; gap: var(--space-4);">
+        <!-- Auto-generated content based on components -->
+        <div class="card" style="padding: var(--space-4); background: var(--color-warning-light); border-left: 3px solid var(--color-warning-main);">
+          <div class="label-base" style="margin-bottom: var(--space-2);">Medium-Fidelity Mockup</div>
+          <div class="body-base">
+            This is a template-based mockup for <strong>{{ screen_name }}</strong>.
+            Implement using the components listed below.
+          </div>
+        </div>
+
+        {% if 'metric' in components_used|join(',') %}
+        <!-- Metric Cards -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3);">
+          <div class="card" style="padding: var(--space-4);">
+            <div class="metric-large" style="color: var(--color-primary-main);">--</div>
+            <div class="body-small" style="color: var(--color-neutral-500);">Metric Value</div>
+          </div>
+          <div class="card" style="padding: var(--space-4);">
+            <div class="metric-large" style="color: var(--color-primary-main);">--</div>
+            <div class="body-small" style="color: var(--color-neutral-500);">Metric Value</div>
+          </div>
+        </div>
+        {% endif %}
+
+        {% if 'card' in components_used|join(',') %}
+        <!-- Content Card -->
+        <div class="card" style="padding: var(--space-4);">
+          <div class="label-base" style="margin-bottom: var(--space-3);">Content Section</div>
+          <div class="body-base" style="color: var(--color-neutral-700);">
+            Main content area for this screen. Replace with actual data and functionality.
+          </div>
+        </div>
+        {% endif %}
+
+        {% if 'input' in components_used|join(',') %}
+        <!-- Form Inputs -->
+        <div style="display: flex; flex-direction: column; gap: var(--space-3);">
+          <div>
+            <label class="label-base" style="display: block; margin-bottom: var(--space-2);">Field Label</label>
+            <input type="text" placeholder="Enter value..." style="width: 100%; padding: var(--space-3); border: 1px solid var(--color-neutral-300); border-radius: var(--radius-md); font-family: var(--font-family);">
+          </div>
+        </div>
+        {% endif %}
+
+        {% if 'button' in components_used|join(',') %}
+        <!-- Action Buttons -->
+        <div style="display: flex; gap: var(--space-3);">
+          <button class="button button-primary button-base" style="flex: 1;">Primary Action</button>
+          <button class="button button-secondary button-base" style="flex: 1;">Secondary</button>
+        </div>
+        {% endif %}
+
+        <!-- Component Reference -->
+        <div class="card" style="padding: var(--space-3); background: var(--color-neutral-50);">
+          <div class="body-small" style="color: var(--color-neutral-600);">
+            <strong>Components:</strong> {{ components_used|join(', ') }}
+          </div>
+        </div>
+      </div>
+    {% endif %}
+  {% endblock %}
+{% else %}
+  {% block desktop_content %}
+    {% if screen_content %}
+      {{ screen_content|safe }}
+    {% else %}
+      {# Auto-generate basic desktop layout #}
+      <!-- Header -->
+      <div style="background: var(--color-bg-white); border-bottom: 1px solid var(--color-neutral-200); padding: var(--space-4) var(--space-6);">
+        <div class="container" style="display: flex; align-items: center; justify-content: space-between;">
+          <div style="display: flex; align-items: center; gap: var(--space-6);">
+            <div class="heading-h3" style="color: var(--color-primary-main);">WABuilder</div>
+            <div class="body-base" style="color: var(--color-neutral-500);">{{ portal|title }} Portal</div>
+          </div>
+          <div style="display: flex; align-items: center; gap: var(--space-4);">
+            <div class="body-base">User Name</div>
+            <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--color-primary-light); display: flex; align-items: center; justify-content: center;" class="label-base">U</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="desktop-content">
+        <!-- Page Header -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-6);">
+          <div>
+            <h1 class="heading-h2">{{ screen_name }}</h1>
+            <p class="body-base" style="color: var(--color-neutral-500); margin-top: var(--space-2);">
+              {{ category|replace('-', ' ')|title }}
+            </p>
+          </div>
+          {% if 'button' in components_used|join(',') %}
+          <button class="button button-primary button-large">Primary Action</button>
+          {% endif %}
+        </div>
+
+        <!-- Content Notice -->
+        <div class="card" style="padding: var(--space-4); background: var(--color-warning-light); border-left: 3px solid var(--color-warning-main); margin-bottom: var(--space-6);">
+          <div class="label-base" style="margin-bottom: var(--space-2);">Medium-Fidelity Mockup</div>
+          <div class="body-base">
+            This is a template-based mockup for <strong>{{ screen_name }}</strong>.
+            Implement using the components and layout patterns described below.
+          </div>
+        </div>
+
+        {% if 'metric' in components_used|join(',') %}
+        <!-- Stats Cards -->
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-4); margin-bottom: var(--space-6);">
+          <div class="card">
+            <div class="body-small" style="color: var(--color-neutral-500); margin-bottom: var(--space-2);">Metric 1</div>
+            <div class="metric-large">--</div>
+          </div>
+          <div class="card">
+            <div class="body-small" style="color: var(--color-neutral-500); margin-bottom: var(--space-2);">Metric 2</div>
+            <div class="metric-large">--</div>
+          </div>
+          <div class="card">
+            <div class="body-small" style="color: var(--color-neutral-500); margin-bottom: var(--space-2);">Metric 3</div>
+            <div class="metric-large">--</div>
+          </div>
+          <div class="card">
+            <div class="body-small" style="color: var(--color-neutral-500); margin-bottom: var(--space-2);">Metric 4</div>
+            <div class="metric-large">--</div>
+          </div>
+        </div>
+        {% endif %}
+
+        {% if 'table' in components_used|join(',') %}
+        <!-- Data Table -->
+        <div style="background: var(--color-bg-white); border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-sm); margin-bottom: var(--space-6);">
+          <table style="width: 100%; border-collapse: collapse;">
+            <thead>
+              <tr style="background: var(--color-neutral-50); border-bottom: 1px solid var(--color-neutral-200);">
+                <th style="padding: var(--space-3) var(--space-4); text-align: left;" class="label-base">Column 1</th>
+                <th style="padding: var(--space-3) var(--space-4); text-align: left;" class="label-base">Column 2</th>
+                <th style="padding: var(--space-3) var(--space-4); text-align: left;" class="label-base">Status</th>
+                <th style="padding: var(--space-3) var(--space-4); text-align: left;" class="label-base">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom: 1px solid var(--color-neutral-100);">
+                <td style="padding: var(--space-4);" class="body-base">Sample Data 1</td>
+                <td style="padding: var(--space-4);" class="body-base">Value</td>
+                <td style="padding: var(--space-4);"><span class="badge badge-success">Active</span></td>
+                <td style="padding: var(--space-4);"><button class="button button-primary button-small">View</button></td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--color-neutral-100);">
+                <td style="padding: var(--space-4);" class="body-base">Sample Data 2</td>
+                <td style="padding: var(--space-4);" class="body-base">Value</td>
+                <td style="padding: var(--space-4);"><span class="badge badge-warning">Pending</span></td>
+                <td style="padding: var(--space-4);"><button class="button button-primary button-small">View</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        {% endif %}
+
+        {% if 'input' in components_used|join(',') %}
+        <!-- Form Section -->
+        <div class="card" style="padding: var(--space-6); margin-bottom: var(--space-6);">
+          <h3 class="heading-h4" style="margin-bottom: var(--space-4);">Form Section</h3>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4);">
+            <div>
+              <label class="label-base" style="display: block; margin-bottom: var(--space-2);">Field Label</label>
+              <input type="text" placeholder="Enter value..." style="width: 100%; padding: var(--space-3); border: 1px solid var(--color-neutral-300); border-radius: var(--radius-md); font-family: var(--font-family);">
+            </div>
+            <div>
+              <label class="label-base" style="display: block; margin-bottom: var(--space-2);">Field Label</label>
+              <input type="text" placeholder="Enter value..." style="width: 100%; padding: var(--space-3); border: 1px solid var(--color-neutral-300); border-radius: var(--radius-md); font-family: var(--font-family);">
+            </div>
+          </div>
+        </div>
+        {% endif %}
+
+        <!-- Component Reference -->
+        <div class="card" style="padding: var(--space-4); background: var(--color-neutral-50);">
+          <div class="body-small" style="color: var(--color-neutral-600);">
+            <strong>Required Components:</strong> {{ components_used|join(', ') }}<br>
+            <strong>User Journey:</strong> {{ user_journey|replace('-', ' ')|title }}<br>
+            {% if critical_path %}<strong>Priority:</strong> Critical Path{% endif %}
+          </div>
+        </div>
+      </div>
+    {% endif %}
+  {% endblock %}
+{% endif %}

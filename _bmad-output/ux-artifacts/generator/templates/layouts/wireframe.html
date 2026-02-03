@@ -1,0 +1,95 @@
+{% extends "layouts/base.html" %}
+
+{% block extra_styles %}
+<style>
+  body {
+    background: #f0f0f0;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+  }
+
+  .wireframe-viewport {
+    max-width: {% if portal == 'business-owner' %}393px{% else %}1440px{% endif %};
+    margin: 0 auto;
+    background: white;
+    min-height: 100vh;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    padding: var(--space-6);
+  }
+
+  .wireframe-box {
+    border: 2px dashed var(--color-neutral-300);
+    background: var(--color-neutral-50);
+    padding: var(--space-4);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-4);
+  }
+
+  .wireframe-header {
+    font-weight: 600;
+    color: var(--color-neutral-700);
+    margin-bottom: var(--space-2);
+  }
+
+  .wireframe-annotation {
+    font-size: 12px;
+    color: var(--color-neutral-500);
+    font-style: italic;
+    line-height: 1.6;
+  }
+
+  .wireframe-placeholder {
+    background: var(--color-neutral-200);
+    border: 1px solid var(--color-neutral-300);
+    padding: var(--space-3);
+    text-align: center;
+    color: var(--color-neutral-500);
+    font-size: 12px;
+    border-radius: var(--radius-sm);
+  }
+
+  /* Fidelity indicator */
+  .fidelity-badge {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background: rgba(255, 165, 0, 0.9);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    z-index: 1000;
+    font-weight: 600;
+  }
+
+  .screen-title {
+    background: var(--color-primary-light);
+    padding: var(--space-4);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-6);
+  }
+
+  .screen-title h1 {
+    margin: 0;
+    color: var(--color-primary-dark);
+  }
+
+  .screen-title p {
+    margin: var(--space-2) 0 0 0;
+    color: var(--color-neutral-700);
+    font-size: 14px;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="fidelity-badge">LOW FIDELITY - WIREFRAME</div>
+<div class="wireframe-viewport">
+  <div class="screen-title">
+    <h1 class="heading-h2">{{ screen_name }}</h1>
+    <p>{{ portal|title }} Portal - {{ category|title }}</p>
+  </div>
+  {% block wireframe_content %}{% endblock %}
+</div>
+{% endblock %}

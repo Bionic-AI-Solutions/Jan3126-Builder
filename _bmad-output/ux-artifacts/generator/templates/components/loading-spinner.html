@@ -1,0 +1,19 @@
+{# Loading Spinner Component
+   Usage: {% include 'components/loading-spinner.html' with
+            size='small'|'medium'|'large',
+            text=optional_loading_text %}
+#}
+{% set size = size|default('medium') %}
+{% set sizes = {'small': '24px', 'medium': '40px', 'large': '64px'} %}
+<div style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--space-3); padding: var(--space-8);">
+  <div style="width: {{ sizes[size] }}; height: {{ sizes[size] }}; border: 3px solid var(--color-neutral-200); border-top-color: var(--color-primary-main); border-radius: 50%; animation: spin 1s linear infinite;"></div>
+  {% if text %}
+  <div class="body-base" style="color: var(--color-neutral-500);">{{ text }}</div>
+  {% endif %}
+</div>
+
+<style>
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+</style>

@@ -1,0 +1,18 @@
+{# Metric Card Component (Business Owner Portal)
+   Usage: {% include 'components/metric-card.html' with
+            value='$850',
+            label='collected today',
+            trend=optional_trend_percent,
+            trend_direction='up'|'down' %}
+#}
+<div class="card" style="padding: var(--space-4); min-height: 120px;">
+  <div style="display: flex; flex-direction: column; gap: var(--space-2);">
+    <div class="metric-large" style="color: var(--color-primary-main);">{{ value }}</div>
+    <div class="body-small" style="color: var(--color-neutral-500);">{{ label }}</div>
+    {% if trend %}
+    <div class="body-small" style="color: {% if trend_direction == 'up' %}var(--color-success-main){% else %}var(--color-error-main){% endif %};">
+      {{ trend }}% {% if trend_direction == 'up' %}↑{% else %}↓{% endif %}
+    </div>
+    {% endif %}
+  </div>
+</div>

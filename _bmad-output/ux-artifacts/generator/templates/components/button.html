@@ -1,0 +1,25 @@
+{# Button Component
+   Usage: {% include 'components/button.html' with
+            variant='primary'|'secondary'|'outline'|'ghost',
+            size='small'|'base'|'large',
+            text='Button Text',
+            icon=optional_icon_html %}
+#}
+{% set variant = variant|default('primary') %}
+{% set size = size|default('base') %}
+{% set classes = {
+  'primary': 'button button-primary',
+  'secondary': 'button button-secondary',
+  'outline': 'button button-outline',
+  'ghost': 'button button-ghost'
+} %}
+{% set size_classes = {
+  'small': 'button-small',
+  'base': 'button-base',
+  'large': 'button-large'
+} %}
+
+<button class="{{ classes[variant] }} {{ size_classes[size] }}" {% if onclick %}onclick="{{ onclick }}"{% endif %}>
+  {% if icon %}{{ icon }}{% endif %}
+  {{ text }}
+</button>

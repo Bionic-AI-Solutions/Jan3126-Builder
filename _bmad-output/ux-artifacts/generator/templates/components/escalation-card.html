@@ -1,0 +1,28 @@
+{# Escalation Card Component (Business Owner Portal)
+   Usage: {% include 'components/escalation-card.html' with
+            count=3,
+            urgent=1,
+            message='Latest escalation message...',
+            time='2 min ago' %}
+#}
+<div class="card" style="padding: var(--space-4);">
+  <div style="display: flex; flex-direction: column; gap: var(--space-3);">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <div class="label-base">Escalations</div>
+      {% if urgent > 0 %}
+      <span class="badge badge-error">{{ urgent }} urgent</span>
+      {% endif %}
+    </div>
+
+    <div class="metric-large">{{ count }}</div>
+
+    {% if message %}
+    <div style="padding: var(--space-3); background: var(--color-neutral-50); border-radius: var(--radius-sm); border-left: 3px solid var(--color-warning-main);">
+      <div class="body-small" style="color: var(--color-neutral-700);">{{ message }}</div>
+      <div class="body-small" style="color: var(--color-neutral-500); margin-top: var(--space-1);">{{ time }}</div>
+    </div>
+    {% endif %}
+
+    <button class="button button-primary button-base" style="width: 100%;">View All</button>
+  </div>
+</div>

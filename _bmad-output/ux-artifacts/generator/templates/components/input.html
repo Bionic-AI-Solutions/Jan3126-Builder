@@ -1,0 +1,21 @@
+{# Input Component
+   Usage: {% include 'components/input.html' with
+            label='Field Label',
+            placeholder='Enter value...',
+            type='text'|'email'|'password'|'number',
+            required=true|false %}
+#}
+{% set type = type|default('text') %}
+<div style="display: flex; flex-direction: column; gap: var(--space-2);">
+  {% if label %}
+  <label class="label-base" style="color: var(--color-neutral-700);">
+    {{ label }}{% if required %}<span style="color: var(--color-error-main);">*</span>{% endif %}
+  </label>
+  {% endif %}
+  <input
+    type="{{ type }}"
+    placeholder="{{ placeholder }}"
+    {% if required %}required{% endif %}
+    style="padding: var(--space-2) var(--space-3); border: 1px solid var(--color-neutral-300); border-radius: var(--radius-md); font-family: var(--font-family); font-size: 14px; line-height: 20px;"
+  />
+</div>

@@ -1,0 +1,18 @@
+{# Navigation Tabs Component
+   Usage: {% include 'components/navigation-tabs.html' with
+            tabs=[
+              {'label': 'Tab 1', 'active': true},
+              {'label': 'Tab 2', 'active': false}
+            ] %}
+#}
+<div style="background: var(--color-bg-white); border-bottom: 1px solid var(--color-neutral-200); padding: 0 var(--space-6);">
+  <div class="container" style="display: flex; gap: var(--space-6);">
+    {% for tab in tabs %}
+    <div style="padding: var(--space-4) 0; border-bottom: 2px solid {% if tab.active %}var(--color-primary-main){% else %}transparent{% endif %}; cursor: pointer;">
+      <div class="label-base" style="color: {% if tab.active %}var(--color-primary-main){% else %}var(--color-neutral-700){% endif %};">
+        {{ tab.label }}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>

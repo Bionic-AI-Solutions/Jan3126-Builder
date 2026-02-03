@@ -1,0 +1,129 @@
+{# Low-Fidelity Wireframe Template
+   This template is for named-only screens with wireframe boxes
+   and annotations explaining intent.
+
+   Variables expected:
+   - portal: 'business-owner', 'developer', 'admin'
+   - screen_id, category, fidelity, components_used, user_journey, critical_path
+   - screen_name, screen_description
+   - wireframe_sections: List of sections with headers and annotations
+#}
+
+{% extends 'layouts/wireframe.html' %}
+
+{% block title %}{{ screen_name }} - Wireframe - WABuilder {{ portal|title }} Portal{% endblock %}
+
+{% block wireframe_content %}
+  <!-- Screen Purpose -->
+  <div class="wireframe-box" style="background: var(--color-warning-light); border-color: var(--color-warning-main);">
+    <div class="wireframe-header">Purpose & Context</div>
+    <div class="wireframe-annotation">
+      {% if screen_description %}
+        {{ screen_description }}
+      {% else %}
+        This {{ fidelity }} fidelity wireframe represents the <strong>{{ screen_name }}</strong> screen in the {{ portal|replace('-', ' ')|title }} Portal.
+        Part of the <em>{{ user_journey|replace('-', ' ')|title }}</em> user journey.
+        {% if critical_path %}This is a <strong>critical path</strong> screen.{% endif %}
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Auto-generate wireframe sections from components if not explicitly provided -->
+  {% if wireframe_sections %}
+    {% for section in wireframe_sections %}
+    <div class="wireframe-box">
+      <div class="wireframe-header">{{ section.header }}</div>
+      <div class="wireframe-placeholder">{{ section.component_type }}</div>
+      <div class="wireframe-annotation" style="margin-top: var(--space-2);">
+        {{ section.annotation }}
+      </div>
+    </div>
+    {% endfor %}
+  {% elif components_used %}
+    <!-- Auto-generated component wireframes -->
+    <div class="wireframe-box">
+      <div class="wireframe-header">Screen Components</div>
+      <div class="wireframe-annotation" style="margin-bottom: var(--space-3);">
+        This screen uses the following components. Implement these according to the design system:
+      </div>
+
+      {% for component in components_used %}
+      <div class="wireframe-placeholder" style="margin-bottom: var(--space-2);">
+        <strong>{{ component }}</strong>
+        {% if 'header' in component %}
+          - Navigation header with portal branding
+        {% elif 'button' in component %}
+          - Interactive button (primary/secondary variants)
+        {% elif 'card' in component %}
+          - Content card with shadow and border radius
+        {% elif 'table' in component %}
+          - Data table with sortable columns
+        {% elif 'input' in component %}
+          - Form input field with validation
+        {% elif 'badge' in component %}
+          - Status badge with color variants
+        {% elif 'empty-state' in component %}
+          - Empty state with icon and call-to-action
+        {% elif 'loading' in component %}
+          - Loading spinner or skeleton
+        {% elif 'navigation' in component %}
+          - Tab navigation or menu
+        {% elif 'metric' in component %}
+          - Metric display card with value and label
+        {% elif 'escalation' in component %}
+          - Escalation card with priority badge
+        {% elif 'filter' in component %}
+          - Filter controls for data views
+        {% elif 'quality' in component %}
+          - Quality score indicator
+        {% else %}
+          - Custom component (see design system)
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <!-- Fallback if no component data -->
+    <div class="wireframe-box">
+      <div class="wireframe-header">Layout Structure</div>
+      <div class="wireframe-placeholder">Page Header</div>
+      <div class="wireframe-placeholder" style="margin-top: var(--space-2);">Main Content Area</div>
+      <div class="wireframe-placeholder" style="margin-top: var(--space-2);">Action Buttons / Footer</div>
+      <div class="wireframe-annotation" style="margin-top: var(--space-3);">
+        Basic layout structure for this screen. Implement according to {{ portal|replace('-', ' ')|title }} Portal patterns.
+      </div>
+    </div>
+  {% endif %}
+
+  <!-- User Journey Context -->
+  {% if user_journey %}
+  <div class="wireframe-box" style="background: var(--color-primary-light); border-color: var(--color-primary-main);">
+    <div class="wireframe-header">User Journey</div>
+    <div class="wireframe-annotation">
+      <strong>Journey:</strong> {{ user_journey|replace('-', ' ')|title }}<br>
+      <strong>Screen Type:</strong> {{ category|replace('-', ' ')|title }}<br>
+      {% if critical_path %}<strong>Priority:</strong> Critical path - implement early{% endif %}
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Custom user interactions if provided -->
+  {% if user_interactions %}
+  <div class="wireframe-box" style="background: var(--color-primary-light); border-color: var(--color-primary-main);">
+    <div class="wireframe-header">User Interactions</div>
+    <ul style="margin: var(--space-2) 0 0 var(--space-4); padding: 0;">
+      {% for interaction in user_interactions %}
+      <li class="wireframe-annotation" style="margin-bottom: var(--space-1);">{{ interaction }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  <!-- Implementation notes if provided -->
+  {% if notes %}
+  <div class="wireframe-box" style="background: var(--color-neutral-50);">
+    <div class="wireframe-header">Implementation Notes</div>
+    <div class="wireframe-annotation">{{ notes }}</div>
+  </div>
+  {% endif %}
+{% endblock %}

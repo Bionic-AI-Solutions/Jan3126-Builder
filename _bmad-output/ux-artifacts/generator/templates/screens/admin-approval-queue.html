@@ -1,0 +1,80 @@
+{% extends "layouts/desktop-portal.html" %}
+
+{% block title %}Approval Queue - WABuilder Admin Portal{% endblock %}
+
+{% block desktop_content %}
+{% include 'components/header-desktop.html' with portal='Admin', user_name='Admin User' %}
+
+{% set tabs = [
+  {'label': 'Approvals', 'active': true},
+  {'label': 'Platform Health', 'active': false},
+  {'label': 'Developers', 'active': false},
+  {'label': 'Quality', 'active': false}
+] %}
+{% include 'components/navigation-tabs.html' with tabs=tabs %}
+
+<div class="desktop-content">
+  <!-- Page Header -->
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-6);">
+    <div>
+      <h1 class="heading-h2">Approval Queue</h1>
+      <p class="body-base" style="color: var(--color-neutral-500); margin-top: var(--space-2);">
+        Review and approve new business automations
+      </p>
+    </div>
+    <button class="button button-primary button-large">Bulk Approve Green (5)</button>
+  </div>
+
+  <!-- Filter Tabs -->
+  {% set filters = [
+    {'label': 'All', 'count': 12, 'active': true},
+    {'label': 'Red', 'count': 2, 'active': false},
+    {'label': 'Yellow', 'count': 5, 'active': false},
+    {'label': 'Green', 'count': 5, 'active': false}
+  ] %}
+  {% include 'components/filter-tabs.html' with filters=filters %}
+
+  <!-- Approvals Table -->
+  <div style="margin-top: var(--space-6);">
+    {% set headers = ['Business', 'Developer', 'Quality Score', 'Status', 'Actions'] %}
+    {% set rows = [
+      [
+        '<div style="font-weight: 500;">FastFix Plumbing</div><div class="body-small" style="color: var(--color-neutral-500);">Emergency plumbing services</div>',
+        '<div>Sarah Chen</div><div class="body-small" style="color: var(--color-neutral-500);">9.2 rating</div>',
+        '<div style="display: flex; gap: var(--space-2);"><span class="badge badge-error">Coverage: 45%</span><span class="badge badge-error">Tests: 2/10</span></div>',
+        '<span class="badge badge-error">Red - Needs Work</span>',
+        '<div style="display: flex; gap: var(--space-2);"><button class="button button-primary button-small">Review</button><button class="button button-secondary button-small">Reject</button></div>'
+      ],
+      [
+        '<div style="font-weight: 500;">Glow Beauty Bar</div><div class="body-small" style="color: var(--color-neutral-500);">Salon appointments & services</div>',
+        '<div>Mike Torres</div><div class="body-small" style="color: var(--color-neutral-500);">8.8 rating</div>',
+        '<div style="display: flex; gap: var(--space-2);"><span class="badge badge-warning">Coverage: 72%</span><span class="badge badge-success">Tests: 7/10</span></div>',
+        '<span class="badge badge-warning">Yellow - Review Needed</span>',
+        '<div style="display: flex; gap: var(--space-2);"><button class="button button-primary button-small">Review</button><button class="button button-secondary button-small">Request Changes</button></div>'
+      ],
+      [
+        '<div style="font-weight: 500;">Happy Paws Vet</div><div class="body-small" style="color: var(--color-neutral-500);">Veterinary appointments</div>',
+        '<div>Lisa Park</div><div class="body-small" style="color: var(--color-neutral-500);">9.5 rating</div>',
+        '<div style="display: flex; gap: var(--space-2);"><span class="badge badge-success">Coverage: 95%</span><span class="badge badge-success">Tests: 10/10</span></div>',
+        '<span class="badge badge-success">Green - Ready</span>',
+        '<div style="display: flex; gap: var(--space-2);"><button class="button button-primary button-small">Approve</button><button class="button button-secondary button-small">Review</button></div>'
+      ],
+      [
+        '<div style="font-weight: 500;">Peak Performance Gym</div><div class="body-small" style="color: var(--color-neutral-500);">Fitness class booking</div>',
+        '<div>James Wright</div><div class="body-small" style="color: var(--color-neutral-500);">9.1 rating</div>',
+        '<div style="display: flex; gap: var(--space-2);"><span class="badge badge-success">Coverage: 92%</span><span class="badge badge-success">Tests: 9/10</span></div>',
+        '<span class="badge badge-success">Green - Ready</span>',
+        '<div style="display: flex; gap: var(--space-2);"><button class="button button-primary button-small">Approve</button><button class="button button-secondary button-small">Review</button></div>'
+      ],
+      [
+        '<div style="font-weight: 500;">Smile Dental Care</div><div class="body-small" style="color: var(--color-neutral-500);">Dental appointments</div>',
+        '<div>Emma Davis</div><div class="body-small" style="color: var(--color-neutral-500);">9.7 rating</div>',
+        '<div style="display: flex; gap: var(--space-2);"><span class="badge badge-success">Coverage: 98%</span><span class="badge badge-success">Tests: 10/10</span></div>',
+        '<span class="badge badge-success">Green - Ready</span>',
+        '<div style="display: flex; gap: var(--space-2);"><button class="button button-primary button-small">Approve</button><button class="button button-secondary button-small">Review</button></div>'
+      ]
+    ] %}
+    {% include 'components/table.html' with headers=headers, rows=rows %}
+  </div>
+</div>
+{% endblock %}

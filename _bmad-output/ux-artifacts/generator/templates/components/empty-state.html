@@ -1,0 +1,21 @@
+{# Empty State Component
+   Usage: {% include 'components/empty-state.html' with
+            title='No items found',
+            message='Create your first item to get started',
+            action_text='Create Item',
+            action_onclick='...' %}
+#}
+<div style="text-align: center; padding: var(--space-16) var(--space-4);">
+  <div style="width: 64px; height: 64px; margin: 0 auto var(--space-4); background: var(--color-neutral-100); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--color-neutral-500);">
+      <circle cx="12" cy="12" r="10"></circle>
+      <line x1="12" y1="8" x2="12" y2="12"></line>
+      <line x1="12" y1="16" x2="12.01" y2="16"></line>
+    </svg>
+  </div>
+  <h3 class="heading-h3" style="margin-bottom: var(--space-2);">{{ title }}</h3>
+  <p class="body-base" style="color: var(--color-neutral-500); margin-bottom: var(--space-6);">{{ message }}</p>
+  {% if action_text %}
+  <button class="button button-primary button-base" {% if action_onclick %}onclick="{{ action_onclick }}"{% endif %}>{{ action_text }}</button>
+  {% endif %}
+</div>

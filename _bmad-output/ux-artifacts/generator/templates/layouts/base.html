@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}WABuilder Mockup{% endblock %}</title>
+  <link rel="stylesheet" href="{% block styles_path %}../../_assets/styles.css{% endblock %}">
+  {% block extra_styles %}{% endblock %}
+</head>
+<body>
+  {% block content %}{% endblock %}
+
+  <!-- Screen Metadata for AI Reference -->
+  <script type="application/json" id="screen-metadata">
+  {
+    "screen_id": "{{ screen_id }}",
+    "portal": "{{ portal }}",
+    "category": "{{ category }}",
+    "fidelity": "{{ fidelity }}",
+    "components_used": {{ components_used|tojson }},
+    "user_journey": "{{ user_journey }}",
+    "critical_path": {{ critical_path|default(false)|tojson }}
+  }
+  </script>
+
+  {% block scripts %}{% endblock %}
+</body>
+</html>

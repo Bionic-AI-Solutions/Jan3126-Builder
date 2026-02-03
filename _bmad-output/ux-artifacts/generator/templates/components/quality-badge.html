@@ -1,0 +1,13 @@
+{# Quality Badge Component (Admin Portal)
+   Usage: {% include 'components/quality-badge.html' with
+            score=95,
+            label='Coverage' %}
+#}
+<div style="display: inline-flex; align-items: center; gap: var(--space-2); padding: var(--space-2) var(--space-3); background: {% if score >= 80 %}var(--color-success-light){% elif score >= 60 %}var(--color-warning-light){% else %}var(--color-error-light){% endif %}; border-radius: var(--radius-md);">
+  <div class="label-base" style="color: {% if score >= 80 %}var(--color-success-dark){% elif score >= 60 %}var(--color-warning-text){% else %}var(--color-error-dark){% endif %};">
+    {{ score }}%
+  </div>
+  <div class="body-small" style="color: {% if score >= 80 %}var(--color-success-dark){% elif score >= 60 %}var(--color-warning-text){% else %}var(--color-error-dark){% endif %};">
+    {{ label }}
+  </div>
+</div>

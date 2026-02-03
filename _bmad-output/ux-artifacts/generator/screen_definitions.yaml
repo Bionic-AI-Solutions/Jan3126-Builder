@@ -1,0 +1,1162 @@
+# WABuilder Screen Definitions
+# Generated from UX Design Specification
+# Total: 122+ screens across 3 portals
+
+screens:
+  # ============================================================================
+  # DEVELOPER PORTAL (52 screens)
+  # ============================================================================
+  developer:
+    01-authentication:
+      - id: dev-landing-page
+        name: Landing Page
+        fidelity: medium
+        spec_status: partially_specified
+        components_used: [header-desktop, button, card]
+        user_journey: developer-registration-onboarding
+        critical_path: true
+
+      - id: dev-registration-form
+        name: Registration Form
+        fidelity: medium
+        spec_status: partially_specified
+        components_used: [header-desktop, input, button]
+        user_journey: developer-registration-onboarding
+        critical_path: true
+
+      - id: dev-application-pending
+        name: Application Pending
+        fidelity: low
+        spec_status: named_only
+        components_used: [header-desktop, empty-state]
+        user_journey: developer-registration-onboarding
+        critical_path: true
+
+      - id: dev-dashboard-empty
+        name: Developer Portal Dashboard (empty state)
+        fidelity: medium
+        spec_status: partially_specified
+        components_used: [header-desktop, navigation-tabs, empty-state]
+        user_journey: developer-registration-onboarding
+        critical_path: true
+
+      - id: dev-onboarding-wizard
+        name: Onboarding Wizard
+        fidelity: low
+        spec_status: named_only
+        components_used: [header-desktop, card, button]
+        user_journey: developer-registration-onboarding
+        critical_path: false
+
+    02-business-setup:
+      - id: dev-portfolio-dashboard
+        name: Portfolio Dashboard
+        fidelity: high
+        spec_status: fully_specified
+        components_used: [header-desktop, navigation-tabs, table, business-row, button]
+        user_journey: developer-business-setup
+        critical_path: true
+
+      - id: dev-new-business-form
+        name: New Business Form
+        fidelity: medium
+        spec_status: partially_specified
+        components_used: [header-desktop, input, button, card]
+        user_journey: developer-business-setup
+        critical_path: true
+
+      - id: dev-host-ai-interview
+        name: Host AI Interview Interface
+        fidelity: medium
+        spec_status: partially_specified
+        components_used: [header-desktop, card, input, button]
+        user_journey: developer-business-setup
+        critical_path: true
+
+      - id: dev-prompt-review
+        name: Generated Prompt Review
+        fidelity: low
+        spec_status: named_only
+        components_used: [header-desktop, card]
+        user_journey: developer-business-setup
+        critical_path: true
+
+      - id: dev-prompt-refinement
+        name: Prompt Refinement Panel
+        fidelity: low
+        spec_status: named_only
+        components_used: [header-desktop, input, card]
+        user_journey: developer-business-setup
+        critical_path: false
+
+      - id: dev-mcp-recommendation
+        name: MCP Recommendation Screen
+        fidelity: low
+        spec_status: named_only
+        components_used: [header-desktop, card, badge]
+        user_journey: developer-business-setup
+        critical_path: true
+
+      - id: dev-mcp-configuration
+        name: MCP Configuration Dashboard
+        fidelity: low
+        spec_status: named_only
+        components_used: [header-desktop, card, input]
+        user_journey: developer-business-setup
+        critical_path: true
+
+      - id: dev-config-complete
+        name: Configuration Complete Summary
+        fidelity: low
+        spec_status: named_only
+        components_used: [header-desktop, card, button]
+        user_journey: developer-business-setup
+        critical_path: false
+
+    03-integration-testing:
+      - id: dev-calendar-integration
+        name: Calendar Integration Wizard
+        fidelity: low
+        spec_status: named_only
+        components_used: [header-desktop, card, input, button]
+        user_journey: developer-integration-testing
+        critical_path: true
+
+      - id: dev-payment-integration
+        name: Payment Integration Wizard
+        fidelity: low
+        spec_status: named_only
+        components_used: [header-desktop, card, input, button]
+        user_journey: developer-integration-testing
+        critical_path: true
+
+      - id: dev-email-configuration
+        name: Email Configuration
+        fidelity: low
+        spec_status: named_only
+        components_used: [header-desktop, input, button]
+        user_journey: developer-integration-testing
+        critical_path: false
+
+      - id: dev-test-connection
+        name: Test Connection Results
+        fidelity: low
+        spec_status: named_only
+        components_used: [header-desktop, badge, card]
+        user_journey: developer-integration-testing
+        critical_path: true
+
+      - id: dev-sandbox-dashboard
+        name: Sandbox Dashboard
+        fidelity: medium
+        spec_status: partially_specified
+        components_used: [header-desktop, navigation-tabs, card, button]
+        user_journey: developer-integration-testing
+        critical_path: true
+
+      - id: dev-whatsapp-emulator
+        name: WhatsApp Emulator
+        fidelity: medium
+        spec_status: partially_specified
+        components_used: [header-desktop, card]
+        user_journey: developer-integration-testing
+        critical_path: true
+
+      - id: dev-test-scenario-checklist
+        name: Test Scenario Checklist
+        fidelity: low
+        spec_status: named_only
+        components_used: [header-desktop, card, badge]
+        user_journey: developer-integration-testing
+        critical_path: true
+
+      - id: dev-mcp-inspector
+        name: MCP Call Inspector
+        fidelity: low
+        spec_status: named_only
+        components_used: [header-desktop, table, card]
+        user_journey: developer-integration-testing
+        critical_path: false
+
+      - id: dev-failed-scenario-replay
+        name: Failed Scenario Replay
+        fidelity: low
+        spec_status: named_only
+        components_used: [header-desktop, card, button]
+        user_journey: developer-integration-testing
+        critical_path: false
+
+    04-approval-submission:
+      - id: dev-pre-submission-checklist
+        name: Pre-Submission Checklist
+        fidelity: low
+        spec_status: named_only
+        components_used: [header-desktop, card, badge]
+        user_journey: developer-approval-submission
+        critical_path: true
+
+      - id: dev-submission-form
+        name: Submission Form
+        fidelity: medium
+        spec_status: partially_specified
+        components_used: [header-desktop, input, button, card]
+        user_journey: developer-approval-submission
+        critical_path: true
+
+      - id: dev-pending-approval
+        name: Pending Approval Status
+        fidelity: low
+        spec_status: named_only
+        components_used: [header-desktop, badge, card]
+        user_journey: developer-approval-submission
+        critical_path: true
+
+      - id: dev-approval-notification
+        name: Approval Notification
+        fidelity: low
+        spec_status: named_only
+        components_used: [header-desktop, badge, button]
+        user_journey: developer-approval-submission
+        critical_path: true
+
+      - id: dev-rejection-feedback
+        name: Rejection Feedback
+        fidelity: low
+        spec_status: named_only
+        components_used: [header-desktop, card, button]
+        user_journey: developer-approval-submission
+        critical_path: false
+
+    05-portfolio-management:
+      - id: dev-portfolio-dashboard-full
+        name: Portfolio Dashboard (Desktop)
+        fidelity: high
+        spec_status: fully_specified
+        components_used: [header-desktop, navigation-tabs, table, business-row, badge]
+        user_journey: developer-portfolio-management
+        critical_path: true
+
+      - id: dev-business-card
+        name: Business Card Component
+        fidelity: medium
+        spec_status: partially_specified
+        components_used: [card, badge, button]
+        user_journey: developer-portfolio-management
+        critical_path: true
+
+      - id: dev-business-detail
+        name: Business Detail View
+        fidelity: medium
+        spec_status: partially_specified
+        components_used: [header-desktop, navigation-tabs, card, badge, button]
+        user_journey: developer-portfolio-management
+        critical_path: true
+
+      - id: dev-automation-graph
+        name: Automation Rate Graph
+        fidelity: low
+        spec_status: named_only
+        components_used: [card]
+        user_journey: developer-portfolio-management
+        critical_path: false
+
+      - id: dev-recent-conversations
+        name: Recent Conversations Panel
+        fidelity: low
+        spec_status: named_only
+        components_used: [card, table]
+        user_journey: developer-portfolio-management
+        critical_path: false
+
+      - id: dev-pending-escalations-list
+        name: Pending Escalations List
+        fidelity: medium
+        spec_status: partially_specified
+        components_used: [card, table, badge]
+        user_journey: developer-portfolio-management
+        critical_path: true
+
+      - id: dev-mcp-health-status
+        name: MCP Health Status
+        fidelity: low
+        spec_status: named_only
+        components_used: [card, badge]
+        user_journey: developer-portfolio-management
+        critical_path: false
+
+      - id: dev-quick-actions
+        name: Quick Actions Panel
+        fidelity: low
+        spec_status: named_only
+        components_used: [card, button]
+        user_journey: developer-portfolio-management
+        critical_path: false
+
+      - id: dev-org-switcher
+        name: Organization Switcher Dropdown
+        fidelity: low
+        spec_status: named_only
+        components_used: [card]
+        user_journey: developer-portfolio-management
+        critical_path: false
+
+      - id: dev-business-list-item
+        name: Business List Item
+        fidelity: low
+        spec_status: named_only
+        components_used: [card, badge]
+        user_journey: developer-portfolio-management
+        critical_path: false
+
+      - id: dev-switching-loading
+        name: Switching Loading State
+        fidelity: low
+        spec_status: named_only
+        components_used: [loading-spinner]
+        user_journey: developer-portfolio-management
+        critical_path: false
+
+      - id: dev-no-escalations
+        name: No Escalations Pending
+        fidelity: low
+        spec_status: named_only
+        components_used: [empty-state]
+        user_journey: developer-portfolio-management
+        critical_path: false
+
+    06-revenue-analytics:
+      - id: dev-revenue-dashboard
+        name: Revenue Dashboard (Desktop)
+        fidelity: medium
+        spec_status: partially_specified
+        components_used: [header-desktop, navigation-tabs, card, table]
+        user_journey: developer-revenue-analytics
+        critical_path: false
+
+      - id: dev-revenue-summary
+        name: Current Month Summary Card
+        fidelity: low
+        spec_status: named_only
+        components_used: [metric-card]
+        user_journey: developer-revenue-analytics
+        critical_path: false
+
+      - id: dev-revenue-by-business
+        name: Revenue by Business Table
+        fidelity: low
+        spec_status: named_only
+        components_used: [table]
+        user_journey: developer-revenue-analytics
+        critical_path: false
+
+      - id: dev-commission-graph
+        name: 12-Month Commission Graph
+        fidelity: low
+        spec_status: named_only
+        components_used: [card]
+        user_journey: developer-revenue-analytics
+        critical_path: false
+
+      - id: dev-commission-calculator
+        name: Commission Calculator
+        fidelity: low
+        spec_status: named_only
+        components_used: [card, input, button]
+        user_journey: developer-revenue-analytics
+        critical_path: false
+
+      - id: dev-payout-history
+        name: Payout History Modal
+        fidelity: low
+        spec_status: named_only
+        components_used: [card, table]
+        user_journey: developer-revenue-analytics
+        critical_path: false
+
+    07-health-monitoring:
+      - id: dev-health-detail
+        name: Business Health Detail View
+        fidelity: medium
+        spec_status: partially_specified
+        components_used: [header-desktop, card, badge, button]
+        user_journey: developer-health-monitoring
+        critical_path: true
+
+      - id: dev-risk-alert
+        name: Risk Alert Badge
+        fidelity: low
+        spec_status: named_only
+        components_used: [badge]
+        user_journey: developer-health-monitoring
+        critical_path: true
+
+      - id: dev-issues-detected
+        name: Issues Detected Panel
+        fidelity: low
+        spec_status: named_only
+        components_used: [card, badge]
+        user_journey: developer-health-monitoring
+        critical_path: true
+
+      - id: dev-suggested-actions
+        name: Suggested Actions Panel
+        fidelity: low
+        spec_status: named_only
+        components_used: [card, button]
+        user_journey: developer-health-monitoring
+        critical_path: false
+
+      - id: dev-prompt-editor
+        name: Prompt Editor
+        fidelity: medium
+        spec_status: partially_specified
+        components_used: [header-desktop, input, button, card]
+        user_journey: developer-health-monitoring
+        critical_path: true
+
+      - id: dev-mcp-health-dashboard
+        name: MCP Health Dashboard
+        fidelity: low
+        spec_status: named_only
+        components_used: [header-desktop, card, badge]
+        user_journey: developer-health-monitoring
+        critical_path: false
+
+      - id: dev-failed-interactions-log
+        name: Failed Interactions Log
+        fidelity: low
+        spec_status: named_only
+        components_used: [table, card]
+        user_journey: developer-health-monitoring
+        critical_path: false
+
+  # ============================================================================
+  # BUSINESS OWNER PORTAL (38+ screens)
+  # ============================================================================
+  business-owner:
+    01-onboarding-setup:
+      - id: bo-phone-auth
+        name: Phone-Based Authentication
+        fidelity: medium
+        spec_status: partially_specified
+        components_used: [header-bo, input, button]
+        user_journey: business-owner-onboarding
+        critical_path: true
+
+      - id: bo-welcome
+        name: Welcome Screen
+        fidelity: medium
+        spec_status: partially_specified
+        components_used: [header-bo, card, button]
+        user_journey: business-owner-onboarding
+        critical_path: true
+
+      - id: bo-host-ai-question
+        name: Host AI Question Interface (voice/text input)
+        fidelity: medium
+        spec_status: partially_specified
+        components_used: [header-bo, input, button, card]
+        user_journey: business-owner-onboarding
+        critical_path: true
+
+      - id: bo-ai-understanding
+        name: AI Understanding Summary
+        fidelity: low
+        spec_status: named_only
+        components_used: [header-bo, card, button]
+        user_journey: business-owner-onboarding
+        critical_path: true
+
+      - id: bo-interview-complete
+        name: Interview Complete
+        fidelity: low
+        spec_status: named_only
+        components_used: [header-bo, card, button]
+        user_journey: business-owner-onboarding
+        critical_path: true
+
+      - id: bo-integration-review
+        name: Integration Review Screen
+        fidelity: low
+        spec_status: named_only
+        components_used: [header-bo, card, button]
+        user_journey: business-owner-onboarding
+        critical_path: true
+
+      - id: bo-mcp-detail
+        name: MCP Detail Card (plain language)
+        fidelity: low
+        spec_status: named_only
+        components_used: [card, badge]
+        user_journey: business-owner-onboarding
+        critical_path: false
+
+      - id: bo-approval-summary
+        name: Approval Summary
+        fidelity: low
+        spec_status: named_only
+        components_used: [header-bo, card, button]
+        user_journey: business-owner-onboarding
+        critical_path: true
+
+    02-template-beta-testing:
+      - id: bo-template-review
+        name: Template Review Screen (mobile)
+        fidelity: medium
+        spec_status: partially_specified
+        components_used: [header-bo, card, button]
+        user_journey: business-owner-beta-testing
+        critical_path: true
+
+      - id: bo-sample-conversation
+        name: Sample Conversation Preview (3 examples)
+        fidelity: low
+        spec_status: named_only
+        components_used: [card]
+        user_journey: business-owner-beta-testing
+        critical_path: true
+
+      - id: bo-feedback-input
+        name: Feedback Input (voice/text)
+        fidelity: low
+        spec_status: named_only
+        components_used: [input, button, card]
+        user_journey: business-owner-beta-testing
+        critical_path: true
+
+      - id: bo-beta-instructions
+        name: Beta Testing Instructions
+        fidelity: low
+        spec_status: named_only
+        components_used: [header-bo, card]
+        user_journey: business-owner-beta-testing
+        critical_path: true
+
+      - id: bo-whatsapp-test
+        name: WhatsApp Test Interface
+        fidelity: low
+        spec_status: named_only
+        components_used: [card]
+        user_journey: business-owner-beta-testing
+        critical_path: true
+
+      - id: bo-beta-progress
+        name: Beta Progress Tracker (5/5 scenarios)
+        fidelity: low
+        spec_status: named_only
+        components_used: [card, badge]
+        user_journey: business-owner-beta-testing
+        critical_path: false
+
+    03-escalation-handling:
+      - id: bo-whatsapp-notification
+        name: WhatsApp Notification
+        fidelity: low
+        spec_status: named_only
+        components_used: [badge]
+        user_journey: business-owner-escalation-handling
+        critical_path: true
+
+      - id: bo-escalation-detail
+        name: Escalation Detail View (mobile)
+        fidelity: high
+        spec_status: fully_specified
+        components_used: [header-bo, escalation-card, button, card]
+        user_journey: business-owner-escalation-handling
+        critical_path: true
+
+      - id: bo-full-context
+        name: Full Context Panel
+        fidelity: low
+        spec_status: named_only
+        components_used: [card]
+        user_journey: business-owner-escalation-handling
+        critical_path: true
+
+      - id: bo-whatsapp-deeplink
+        name: WhatsApp Deep Link Action
+        fidelity: low
+        spec_status: named_only
+        components_used: [button]
+        user_journey: business-owner-escalation-handling
+        critical_path: true
+
+      - id: bo-inapp-response
+        name: In-App Response Interface
+        fidelity: low
+        spec_status: named_only
+        components_used: [input, button, card]
+        user_journey: business-owner-escalation-handling
+        critical_path: false
+
+    04-dashboard-monitoring:
+      - id: bo-dashboard
+        name: Mobile Dashboard (priority layout)
+        fidelity: high
+        spec_status: fully_specified
+        components_used: [header-bo, metric-card, escalation-card, button]
+        user_journey: business-owner-daily-management
+        critical_path: true
+
+      - id: bo-escalations-badge
+        name: Pending Escalations Badge
+        fidelity: low
+        spec_status: named_only
+        components_used: [badge]
+        user_journey: business-owner-daily-management
+        critical_path: true
+
+      - id: bo-activity-summary
+        name: Today's Activity Summary Card
+        fidelity: low
+        spec_status: named_only
+        components_used: [metric-card]
+        user_journey: business-owner-daily-management
+        critical_path: false
+
+      - id: bo-automation-rate
+        name: Automation Rate Display
+        fidelity: low
+        spec_status: named_only
+        components_used: [metric-card]
+        user_journey: business-owner-daily-management
+        critical_path: false
+
+      - id: bo-escalation-list
+        name: Escalation List View
+        fidelity: medium
+        spec_status: partially_specified
+        components_used: [header-bo, card, badge]
+        user_journey: business-owner-daily-management
+        critical_path: true
+
+      - id: bo-activity-detail
+        name: Activity Detail List
+        fidelity: low
+        spec_status: named_only
+        components_used: [card]
+        user_journey: business-owner-daily-management
+        critical_path: false
+
+      - id: bo-automation-trend
+        name: 7-Day Automation Trend Graph
+        fidelity: low
+        spec_status: named_only
+        components_used: [card]
+        user_journey: business-owner-daily-management
+        critical_path: false
+
+    05-revenue-analytics:
+      - id: bo-revenue-detail
+        name: Revenue Detail View (mobile)
+        fidelity: medium
+        spec_status: partially_specified
+        components_used: [header-bo, metric-card, card]
+        user_journey: business-owner-revenue-analytics
+        critical_path: false
+
+      - id: bo-monthly-summary
+        name: Monthly Summary Card
+        fidelity: low
+        spec_status: named_only
+        components_used: [metric-card]
+        user_journey: business-owner-revenue-analytics
+        critical_path: false
+
+      - id: bo-revenue-bar-chart
+        name: 7-Day Revenue Bar Chart
+        fidelity: low
+        spec_status: named_only
+        components_used: [card]
+        user_journey: business-owner-revenue-analytics
+        critical_path: false
+
+      - id: bo-revenue-by-service
+        name: Revenue by Service Breakdown
+        fidelity: low
+        spec_status: named_only
+        components_used: [card]
+        user_journey: business-owner-revenue-analytics
+        critical_path: false
+
+      - id: bo-top-customers
+        name: Top Customers List
+        fidelity: low
+        spec_status: named_only
+        components_used: [card]
+        user_journey: business-owner-revenue-analytics
+        critical_path: false
+
+      - id: bo-transaction-list
+        name: Transaction List
+        fidelity: low
+        spec_status: named_only
+        components_used: [card]
+        user_journey: business-owner-revenue-analytics
+        critical_path: false
+
+      - id: bo-transaction-detail
+        name: Transaction Detail with PDF Receipt
+        fidelity: low
+        spec_status: named_only
+        components_used: [card, button]
+        user_journey: business-owner-revenue-analytics
+        critical_path: false
+
+    06-settings-configuration:
+      - id: bo-settings-menu
+        name: Settings Menu (mobile)
+        fidelity: medium
+        spec_status: partially_specified
+        components_used: [header-bo, card, button]
+        user_journey: business-owner-settings
+        critical_path: false
+
+      - id: bo-business-hours
+        name: Business Hours Editor
+        fidelity: low
+        spec_status: named_only
+        components_used: [header-bo, input, button]
+        user_journey: business-owner-settings
+        critical_path: true
+
+      - id: bo-emergency-shutoff
+        name: Emergency Shutoff Confirmation
+        fidelity: medium
+        spec_status: partially_specified
+        components_used: [header-bo, card, button]
+        user_journey: business-owner-settings
+        critical_path: true
+
+      - id: bo-away-mode
+        name: Away Mode Setup
+        fidelity: low
+        spec_status: named_only
+        components_used: [header-bo, input, button]
+        user_journey: business-owner-settings
+        critical_path: true
+
+      - id: bo-notification-prefs
+        name: Notification Preferences Toggles
+        fidelity: low
+        spec_status: named_only
+        components_used: [header-bo, input]
+        user_journey: business-owner-settings
+        critical_path: false
+
+      - id: bo-developer-contact
+        name: Developer Contact Info
+        fidelity: low
+        spec_status: named_only
+        components_used: [card]
+        user_journey: business-owner-settings
+        critical_path: false
+
+    07-conversation-management:
+      - id: bo-conversation-list
+        name: Conversation List (mobile)
+        fidelity: medium
+        spec_status: partially_specified
+        components_used: [header-bo, card]
+        user_journey: business-owner-conversation-management
+        critical_path: false
+
+      - id: bo-search-filter
+        name: Search/Filter Panel
+        fidelity: low
+        spec_status: named_only
+        components_used: [input, button]
+        user_journey: business-owner-conversation-management
+        critical_path: false
+
+      - id: bo-conversation-detail
+        name: Conversation Detail View
+        fidelity: low
+        spec_status: named_only
+        components_used: [header-bo, card]
+        user_journey: business-owner-conversation-management
+        critical_path: false
+
+      - id: bo-thread-display
+        name: Full Thread Display with Actions
+        fidelity: low
+        spec_status: named_only
+        components_used: [card, button]
+        user_journey: business-owner-conversation-management
+        critical_path: false
+
+      - id: bo-no-conversations
+        name: No Conversations Yet (first day)
+        fidelity: low
+        spec_status: named_only
+        components_used: [empty-state]
+        user_journey: business-owner-conversation-management
+        critical_path: false
+
+  # ============================================================================
+  # ADMIN PORTAL (25 screens)
+  # ============================================================================
+  admin:
+    01-approval-quality-gates:
+      - id: admin-approval-queue
+        name: Approval Queue Screen
+        fidelity: high
+        spec_status: fully_specified
+        components_used: [header-desktop, navigation-tabs, filter-tabs, table, quality-badge, button]
+        user_journey: admin-approval-queue
+        critical_path: true
+
+      - id: admin-business-detail
+        name: Business Detail View (approval context)
+        fidelity: medium
+        spec_status: partially_specified
+        components_used: [header-desktop, card, badge, button]
+        user_journey: admin-approval-queue
+        critical_path: true
+
+      - id: admin-quality-assessment
+        name: Quality Assessment Panel
+        fidelity: low
+        spec_status: named_only
+        components_used: [card, quality-badge]
+        user_journey: admin-approval-queue
+        critical_path: true
+
+      - id: admin-bulk-action
+        name: Bulk Action Confirmation
+        fidelity: medium
+        spec_status: partially_specified
+        components_used: [card, button]
+        user_journey: admin-approval-queue
+        critical_path: true
+
+      - id: admin-request-changes
+        name: Request Changes Form
+        fidelity: low
+        spec_status: named_only
+        components_used: [input, button, card]
+        user_journey: admin-approval-queue
+        critical_path: false
+
+      - id: admin-rejection-reason
+        name: Rejection Reason Selector
+        fidelity: low
+        spec_status: named_only
+        components_used: [input, button]
+        user_journey: admin-approval-queue
+        critical_path: false
+
+    02-platform-monitoring:
+      - id: admin-platform-health
+        name: Platform Health Dashboard
+        fidelity: high
+        spec_status: fully_specified
+        components_used: [header-desktop, navigation-tabs, metric-card, card, badge]
+        user_journey: admin-platform-monitoring
+        critical_path: true
+
+      - id: admin-key-metrics
+        name: Key Metrics Display
+        fidelity: low
+        spec_status: named_only
+        components_used: [metric-card]
+        user_journey: admin-platform-monitoring
+        critical_path: true
+
+      - id: admin-alert-panel
+        name: Alert Panel
+        fidelity: medium
+        spec_status: partially_specified
+        components_used: [card, badge]
+        user_journey: admin-platform-monitoring
+        critical_path: true
+
+      - id: admin-alert-detail
+        name: Alert Detail View
+        fidelity: low
+        spec_status: named_only
+        components_used: [card, badge, button]
+        user_journey: admin-platform-monitoring
+        critical_path: true
+
+      - id: admin-trend-graphs
+        name: Trend Graphs (30-day view)
+        fidelity: low
+        spec_status: named_only
+        components_used: [card]
+        user_journey: admin-platform-monitoring
+        critical_path: false
+
+      - id: admin-metric-drilldown
+        name: Metric Drill-Down
+        fidelity: low
+        spec_status: named_only
+        components_used: [card, table]
+        user_journey: admin-platform-monitoring
+        critical_path: false
+
+      - id: admin-export-report
+        name: Export Report Generator
+        fidelity: low
+        spec_status: named_only
+        components_used: [card, button, input]
+        user_journey: admin-platform-monitoring
+        critical_path: false
+
+    03-developer-management:
+      - id: admin-developer-list
+        name: Developer List
+        fidelity: medium
+        spec_status: partially_specified
+        components_used: [header-desktop, navigation-tabs, table, badge, button]
+        user_journey: admin-developer-management
+        critical_path: true
+
+      - id: admin-developer-filter
+        name: Filter Panel (reputation, performance, status)
+        fidelity: low
+        spec_status: named_only
+        components_used: [input, button]
+        user_journey: admin-developer-management
+        critical_path: false
+
+      - id: admin-developer-profile
+        name: Developer Profile Detail
+        fidelity: medium
+        spec_status: partially_specified
+        components_used: [header-desktop, card, badge, button]
+        user_journey: admin-developer-management
+        critical_path: true
+
+      - id: admin-developer-portfolio
+        name: Portfolio View (developer's businesses)
+        fidelity: low
+        spec_status: named_only
+        components_used: [card, table]
+        user_journey: admin-developer-management
+        critical_path: false
+
+      - id: admin-reputation-editor
+        name: Reputation Score Editor
+        fidelity: low
+        spec_status: named_only
+        components_used: [input, button, card]
+        user_journey: admin-developer-management
+        critical_path: false
+
+      - id: admin-notes-interface
+        name: Admin Notes Interface
+        fidelity: low
+        spec_status: named_only
+        components_used: [input, card]
+        user_journey: admin-developer-management
+        critical_path: false
+
+      - id: admin-suspension-confirm
+        name: Suspension Confirmation Dialog
+        fidelity: low
+        spec_status: named_only
+        components_used: [card, button]
+        user_journey: admin-developer-management
+        critical_path: false
+
+    04-quality-review:
+      - id: admin-quality-search
+        name: Quality Search Interface
+        fidelity: low
+        spec_status: named_only
+        components_used: [input, button]
+        user_journey: admin-quality-review
+        critical_path: false
+
+      - id: admin-quality-list
+        name: Business Quality List
+        fidelity: low
+        spec_status: named_only
+        components_used: [table, quality-badge]
+        user_journey: admin-quality-review
+        critical_path: false
+
+      - id: admin-quality-detail
+        name: Quality Detail View
+        fidelity: low
+        spec_status: named_only
+        components_used: [card, quality-badge]
+        user_journey: admin-quality-review
+        critical_path: false
+
+      - id: admin-metrics-panel
+        name: Metrics Panel
+        fidelity: low
+        spec_status: named_only
+        components_used: [metric-card]
+        user_journey: admin-quality-review
+        critical_path: false
+
+      - id: admin-root-cause
+        name: Root Cause Analysis Display
+        fidelity: low
+        spec_status: named_only
+        components_used: [card]
+        user_journey: admin-quality-review
+        critical_path: false
+
+      - id: admin-conversation-logs
+        name: Conversation Logs Viewer
+        fidelity: low
+        spec_status: named_only
+        components_used: [card, table]
+        user_journey: admin-quality-review
+        critical_path: false
+
+      - id: admin-quality-action
+        name: Quality Action Panel
+        fidelity: low
+        spec_status: named_only
+        components_used: [button, card]
+        user_journey: admin-quality-review
+        critical_path: false
+
+    05-manual-intervention:
+      - id: admin-intervention-dashboard
+        name: Intervention Dashboard
+        fidelity: medium
+        spec_status: partially_specified
+        components_used: [header-desktop, card, badge]
+        user_journey: admin-manual-intervention
+        critical_path: true
+
+      - id: admin-circuit-breaker
+        name: Circuit Breaker Detail
+        fidelity: low
+        spec_status: named_only
+        components_used: [card, badge, button]
+        user_journey: admin-manual-intervention
+        critical_path: true
+
+      - id: admin-customer-escalation
+        name: Customer Escalation Detail
+        fidelity: low
+        spec_status: named_only
+        components_used: [card, button]
+        user_journey: admin-manual-intervention
+        critical_path: false
+
+      - id: admin-owner-complaint
+        name: Owner Complaint Detail
+        fidelity: low
+        spec_status: named_only
+        components_used: [card, button]
+        user_journey: admin-manual-intervention
+        critical_path: false
+
+      - id: admin-mcp-infrastructure
+        name: MCP Infrastructure Status
+        fidelity: low
+        spec_status: named_only
+        components_used: [card, badge]
+        user_journey: admin-manual-intervention
+        critical_path: false
+
+      - id: admin-intervention-actions
+        name: Intervention Action Panels
+        fidelity: low
+        spec_status: named_only
+        components_used: [button, card]
+        user_journey: admin-manual-intervention
+        critical_path: false
+
+      - id: admin-no-pending-approvals
+        name: No Pending Approvals
+        fidelity: low
+        spec_status: named_only
+        components_used: [empty-state]
+        user_journey: admin-approval-queue
+        critical_path: false
+
+  # ============================================================================
+  # SYSTEM SCREENS (10 screens)
+  # ============================================================================
+  system-screens:
+    01-error-handling:
+      - id: system-generic-error
+        name: Generic Error Modal
+        fidelity: low
+        spec_status: named_only
+        components_used: [card, button]
+        user_journey: error-handling
+        critical_path: false
+
+      - id: system-session-timeout
+        name: Session Timeout Screen
+        fidelity: low
+        spec_status: named_only
+        components_used: [card, button]
+        user_journey: error-handling
+        critical_path: false
+
+      - id: system-maintenance-mode
+        name: Maintenance Mode Screen
+        fidelity: low
+        spec_status: named_only
+        components_used: [card]
+        user_journey: error-handling
+        critical_path: false
+
+    02-empty-states:
+      - id: system-dev-no-businesses
+        name: No Businesses Yet (empty portfolio)
+        fidelity: low
+        spec_status: named_only
+        components_used: [empty-state, button]
+        user_journey: developer-portfolio-management
+        critical_path: false
+
+      - id: system-dev-no-escalations
+        name: No Escalations Pending
+        fidelity: low
+        spec_status: named_only
+        components_used: [empty-state]
+        user_journey: developer-portfolio-management
+        critical_path: false
+
+      - id: system-bo-no-conversations
+        name: No Conversations Yet (first day)
+        fidelity: low
+        spec_status: named_only
+        components_used: [empty-state]
+        user_journey: business-owner-conversation-management
+        critical_path: false
+
+      - id: system-admin-no-approvals
+        name: No Pending Approvals
+        fidelity: low
+        spec_status: named_only
+        components_used: [empty-state]
+        user_journey: admin-approval-queue
+        critical_path: false
+
+    03-loading-offline:
+      - id: system-bo-loading
+        name: Loading Spinner (data fetching)
+        fidelity: low
+        spec_status: named_only
+        components_used: [loading-spinner]
+        user_journey: business-owner-daily-management
+        critical_path: false
+
+      - id: system-bo-offline
+        name: Offline Mode Indicator
+        fidelity: low
+        spec_status: named_only
+        components_used: [badge, card]
+        user_journey: business-owner-daily-management
+        critical_path: false
+
+      - id: system-bo-syncing
+        name: Syncing Indicator (reconnection after offline)
+        fidelity: low
+        spec_status: named_only
+        components_used: [loading-spinner, card]
+        user_journey: business-owner-daily-management
+        critical_path: false

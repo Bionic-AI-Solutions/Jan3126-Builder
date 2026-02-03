@@ -1,0 +1,86 @@
+{% extends "layouts/desktop-portal.html" %}
+
+{% block title %}Portfolio Dashboard - WABuilder Developer Portal{% endblock %}
+
+{% block desktop_content %}
+{% set portal = 'Developer' %}
+{% set user_name = 'John Developer' %}
+{% include 'components/header-desktop.html' %}
+
+{% set tabs = [
+  {'label': 'Portfolio', 'active': true},
+  {'label': 'Sandbox', 'active': false},
+  {'label': 'Revenue', 'active': false},
+  {'label': 'Health', 'active': false}
+] %}
+{% include 'components/navigation-tabs.html' %}
+
+<div class="desktop-content">
+  <!-- Page Header -->
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-6);">
+    <div>
+      <h1 class="heading-h2">My Portfolio</h1>
+      <p class="body-base" style="color: var(--color-neutral-500); margin-top: var(--space-2);">
+        Manage all your business automations
+      </p>
+    </div>
+    <button class="button button-primary button-large">+ Add Business</button>
+  </div>
+
+  <!-- Stats Cards -->
+  <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-4); margin-bottom: var(--space-6);">
+    <div class="card">
+      <div class="body-small" style="color: var(--color-neutral-500); margin-bottom: var(--space-2);">Active Businesses</div>
+      <div class="metric-large">8</div>
+    </div>
+    <div class="card">
+      <div class="body-small" style="color: var(--color-neutral-500); margin-bottom: var(--space-2);">Avg Automation</div>
+      <div class="metric-large" style="color: var(--color-primary-main);">87%</div>
+    </div>
+    <div class="card">
+      <div class="body-small" style="color: var(--color-neutral-500); margin-bottom: var(--space-2);">Pending Escalations</div>
+      <div class="metric-large">12</div>
+    </div>
+    <div class="card">
+      <div class="body-small" style="color: var(--color-neutral-500); margin-bottom: var(--space-2);">Monthly Revenue</div>
+      <div class="metric-large">$2,450</div>
+    </div>
+  </div>
+
+  <!-- Businesses Table -->
+  {% set headers = ['Business', 'Status', 'Automation', 'Actions'] %}
+  {% set rows = [
+    [
+      '<div style="font-weight: 500;">Acme Dental Clinic</div>',
+      '<span class="badge badge-success">Active</span>',
+      '<div style="display: flex; align-items: center; gap: var(--space-2);"><div style="flex: 1; background: var(--color-neutral-200); border-radius: var(--radius-full); height: 6px; overflow: hidden;"><div style="background: var(--color-primary-main); height: 100%; width: 95%;"></div></div><div class="body-small">95%</div></div>',
+      '<div style="display: flex; gap: var(--space-2);"><button class="button button-primary button-small">View</button><button class="button button-secondary button-small">Edit</button></div>'
+    ],
+    [
+      '<div style="font-weight: 500;">Bella Salon & Spa</div>',
+      '<span class="badge badge-success">Active</span>',
+      '<div style="display: flex; align-items: center; gap: var(--space-2);"><div style="flex: 1; background: var(--color-neutral-200); border-radius: var(--radius-full); height: 6px; overflow: hidden;"><div style="background: var(--color-primary-main); height: 100%; width: 92%;"></div></div><div class="body-small">92%</div></div>',
+      '<div style="display: flex; gap: var(--space-2);"><button class="button button-primary button-small">View</button><button class="button button-secondary button-small">Edit</button></div>'
+    ],
+    [
+      '<div style="font-weight: 500;">City Plumbing Services</div>',
+      '<span class="badge badge-warning">Testing</span>',
+      '<div style="display: flex; align-items: center; gap: var(--space-2);"><div style="flex: 1; background: var(--color-neutral-200); border-radius: var(--radius-full); height: 6px; overflow: hidden;"><div style="background: var(--color-warning-main); height: 100%; width: 68%;"></div></div><div class="body-small">68%</div></div>',
+      '<div style="display: flex; gap: var(--space-2);"><button class="button button-primary button-small">View</button><button class="button button-secondary button-small">Edit</button></div>'
+    ],
+    [
+      '<div style="font-weight: 500;">Downtown Auto Repair</div>',
+      '<span class="badge badge-success">Active</span>',
+      '<div style="display: flex; align-items: center; gap: var(--space-2);"><div style="flex: 1; background: var(--color-neutral-200); border-radius: var(--radius-full); height: 6px; overflow: hidden;"><div style="background: var(--color-primary-main); height: 100%; width: 88%;"></div></div><div class="body-small">88%</div></div>',
+      '<div style="display: flex; gap: var(--space-2);"><button class="button button-primary button-small">View</button><button class="button button-secondary button-small">Edit</button></div>'
+    ],
+    [
+      '<div style="font-weight: 500;">Elite Fitness Center</div>',
+      '<span class="badge badge-success">Active</span>',
+      '<div style="display: flex; align-items: center; gap: var(--space-2);"><div style="flex: 1; background: var(--color-neutral-200); border-radius: var(--radius-full); height: 6px; overflow: hidden;"><div style="background: var(--color-primary-main); height: 100%; width: 91%;"></div></div><div class="body-small">91%</div></div>',
+      '<div style="display: flex; gap: var(--space-2);"><button class="button button-primary button-small">View</button><button class="button button-secondary button-small">Edit</button></div>'
+    ]
+  ] %}
+  {% include 'components/table.html' with headers=headers, rows=rows %}
+</div>
+{% endblock %}
