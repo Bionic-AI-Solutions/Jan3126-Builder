@@ -12,8 +12,8 @@
 	},
 	"mounts": [
 		"source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind",
-		"source=${env:HOME}/.kube,target=/home/vscode/.kube,type=bind",
-		"source=${env:HOME}/.cursor/mcp.json,target=/home/vscode/.cursor/mcp.json,type=bind,readonly"
+		"source=${env:USERPROFILE}/.kube,target=/home/vscode/.kube,type=bind",
+		"source=${env:USERPROFILE}/.cursor/mcp.json,target=/home/vscode/.cursor/mcp.json,type=bind,readonly"
 	],
 	"customizations": {
 		"vscode": {
